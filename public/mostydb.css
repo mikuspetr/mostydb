@@ -1,0 +1,13 @@
+.scrolling {
+    height: 90vh;
+    overflow-y: scroll;
+}
+.record-text {
+    max-height: 100px;
+    overflow-y: hidden;
+}
+
+.nav-link.active {
+    font-weight: 600;
+    border-bottom: 1px solid;
+}

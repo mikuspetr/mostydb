@@ -1,0 +1,78 @@
+CZ0100;1;3100;Hlavní město Praha
+CZ0201;2;3201;Benešov
+CZ0202;3;3202;Beroun
+CZ0203;4;3203;Kladno
+CZ0204;5;3204;Kolín
+CZ0205;6;3205;Kutná Hora
+CZ0206;7;3206;Mělník
+CZ0207;8;3207;Mladá Boleslav
+CZ0208;9;3208;Nymburk
+CZ0209;10;3209;Praha-východ
+CZ020A;11;3210;Praha-západ
+CZ020B;12;3211;Příbram
+CZ020C;13;3212;Rakovník
+CZ0311;14;3301;České Budějovice
+CZ0312;15;3302;Český Krumlov
+CZ0313;16;3303;Jindřichův Hradec
+CZ0633;17;3304;Pelhřimov
+CZ0314;18;3305;Písek
+CZ0315;19;3306;Prachatice
+CZ0316;20;3307;Strakonice
+CZ0317;21;3308;Tábor
+CZ0321;22;3401;Domažlice
+CZ0411;23;3402;Cheb
+CZ0412;24;3403;Karlovy Vary
+CZ0322;25;3404;Klatovy
+CZ0323;26;3405;Plzeň-město
+CZ0324;27;3406;Plzeň-jih
+CZ0325;28;3407;Plzeň-sever
+CZ0326;29;3408;Rokycany
+CZ0413;30;3409;Sokolov
+CZ0327;31;3410;Tachov
+CZ0511;32;3501;Česká Lípa
+CZ0421;33;3502;Děčín
+CZ0422;34;3503;Chomutov
+CZ0512;35;3504;Jablonec nad Nisou
+CZ0513;36;3505;Liberec
+CZ0423;37;3506;Litoměřice
+CZ0424;38;3507;Louny
+CZ0425;39;3508;Most
+CZ0426;40;3509;Teplice
+CZ0427;41;3510;Ústí nad Labem
+CZ0631;42;3601;Havlíčkův Brod
+CZ0521;43;3602;Hradec Králové
+CZ0531;44;3603;Chrudim
+CZ0522;45;3604;Jičín
+CZ0523;46;3605;Náchod
+CZ0532;47;3606;Pardubice
+CZ0524;48;3607;Rychnov nad Kněžnou
+CZ0514;49;3608;Semily
+CZ0533;50;3609;Svitavy
+CZ0525;51;3610;Trutnov
+CZ0534;52;3611;Ústí nad Orlicí
+CZ0641;53;3701;Blansko
+CZ0642;54;3702;Brno-město
+CZ0643;55;3703;Brno-venkov
+CZ0644;56;3704;Břeclav
+CZ0724;57;3705;Zlín
+CZ0645;58;3706;Hodonín
+CZ0632;59;3707;Jihlava
+CZ0721;60;3708;Kroměříž
+CZ0713;61;3709;Prostějov
+CZ0634;62;3710;Třebíč
+CZ0722;63;3711;Uherské Hradiště
+CZ0646;64;3712;Vyškov
+CZ0647;65;3713;Znojmo
+CZ0635;66;3714;Žďár nad Sázavou
+CZ0801;67;3801;Bruntál
+CZ0802;68;3802;Frýdek-Místek
+CZ0803;69;3803;Karviná
+CZ0804;70;3804;Nový Jičín
+CZ0712;71;3805;Olomouc
+CZ0805;72;3806;Opava
+CZ0806;73;3807;Ostrava-město
+CZ0714;74;3808;Přerov
+CZ0715;75;3809;Šumperk
+CZ0723;76;3810;Vsetín
+CZ0711;77;3811;Jeseník
+CZ0100;78;9999;území Hlavního města Prahy
