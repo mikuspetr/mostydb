@@ -17,12 +17,12 @@ class DatabaseSeeder extends Seeder
     {
         //dd(1);
         $this->call([
-            //UserSeeder::class,
+            UserSeeder::class,
             //CategorySeeder::class,
-            //ClientSeeder::class,
-            //RecordSeeder::class,
+            ClientSeeder::class,
+            RecordSeeder::class,
             IPSeeder::class,
-            //AddressSeeder::class
+            AddressSeeder::class
         ]);
         // \App\Models\User::factory(10)->create();
 
