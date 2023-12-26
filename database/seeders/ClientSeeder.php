@@ -26,7 +26,6 @@ class ClientSeeder extends Seeder
                 'contract' => $klient->smlouva == '0000-00-00' ? null : $klient->smlouva
             ];
         })->toArray();
-        //dd($klienti);
         DB::table('clients')->insert($klienti);
 
         $anamnezy = DB::connection('mostyold')->table('anamneza')->get()->map(function ($anamneza) {
