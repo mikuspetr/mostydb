@@ -1,6 +1,6 @@
 @extends('templates.main')
 @section('content')
-<h1>Pracovníci</h1>
+<x-crud.header>Pracovníci</x-crud.header>
 <table class="table">
     <thead><tr><td>#</td><td>jméno</td><td>Email</td><td>Role</td></tr></thead>
     <tbody>

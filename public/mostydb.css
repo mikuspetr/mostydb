@@ -11,3 +11,13 @@
     font-weight: 600;
     border-bottom: 1px solid;
 }
+
+.crud-header {
+    display: flex;
+    align-items: center;
+    margin: 1rem 0px;
+}
+
+.crud-header__button {
+    margin-left: auto;
+}

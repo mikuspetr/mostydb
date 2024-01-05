@@ -1,19 +1,11 @@
 @extends('templates.main')
 @section('content')
     <div class="row">
-        <div class="col-sm-2 scrolling">
-            @foreach ($clients as $cl)
-                <div id="client-{{ $cl->id }}">
-                    <a class="btn btn-outline-primary btn-sm w-100 {{ $cl->id == $client->id ? 'active' : '' }}"
-                        href="{{ route('clients.show', ['client' => $cl->id]) }}">
-                        {{ $cl->clientCode }}
-                    </a>
-                </div>
-            @endforeach
-        </div>
-        <div class="col-sm-10">
+        <div class="col-sm-12">
             <x-session-alert></x-session-alert>
-            <h2 class="my-4">{{ $client->clientCode }} </h2>
+            <x-crud.header itemId="{{$client->id}}">
+                {{ $client->clientCode }}
+            </x-crud.header>
 
             <div id="exTab2" class="clearfix my-3">
                 <ul class="nav nav-tabs">
@@ -65,12 +57,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        const element = document.getElementById("client-{{ $client->id }}");
-        element.scrollIntoView({
-            behavior: 'smooth'
-        });
-    </script>
-@endpush

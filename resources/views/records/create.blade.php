@@ -1,6 +1,6 @@
 @extends('templates.main')
 @section('content')
-    <x-nav-resources />
+    <x-crud.header>Nový záznam</x-crud.header>
 
     <form method="POST" action="{{ route('records.create') }}">
         <div class="row">

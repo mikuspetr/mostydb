@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -12,6 +13,8 @@ class MyController extends Controller
 {
     public function debug(Request $request)
     {
+        $routeCurrent = Route::is('debug');
+        dd($routeCurrent);
         //$role = Role::create(['name' => 'editor']);
         //$permission = Permission::create(['name' => 'edit users permisions']);
 

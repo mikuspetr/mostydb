@@ -1,8 +1,7 @@
 @extends('templates.main')
 
 @section('content')
-<x-nav-resources />
-<h1>Klienti</h1>
+<x-crud.header>Klienti</x-crud.header>
 <table class="table">
     <thead><tr><td>#</td><td>Kód</td></tr></thead>
     <tbody>

@@ -1,4 +1,4 @@
-<section class="container-fluid">
+<section id="menu" class="container-fluid">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <span class="navbar-brand">Mosty</span>

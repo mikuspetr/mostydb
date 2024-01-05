@@ -1,14 +1,16 @@
 @extends('templates.main')
 
 @section('content')
-<h1>Klienti</h1>
+<x-crud.header>Záznamy</x-crud.header>
 <table class="table">
     <thead><tr><td>#</td><td>Datum</td><td>Místo</td><td>Pracovník</td><td>Klient</td><td>Forma</td><td>Typ</td><td>Délka</td><td>Text</td></tr></thead>
     <tbody>
         @foreach($records as $record)
         <tr>
             <td>
-                <a class="btn btn-outline-primary btn-sm" href="{{route('records.edit', ['record' => $record->id])}}">{{$record->id}}</a>
+                {{$record->id}}
+                <a class="btn btn-outline-primary btn-sm" href="{{route('records.edit', ['record' => $record->id])}}" title="upravit"><i class="bi bi-pencil-square"></i></a>
+                <a class="btn btn-outline-primary btn-sm" href="{{route('records.show', ['record' => $record->id])}}" title="zobrazit"><i class="bi bi-eye"></i></a>
             </td>
             <td>{{$record->date}}</td>
             <td>{{$record->place->name ?? ''}}</td>

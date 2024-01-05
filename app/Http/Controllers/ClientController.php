@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use \App\Models\Client;
 use App\Models\ClientDescription;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Route;
 
 class ClientController extends Controller
 {
@@ -29,9 +31,8 @@ class ClientController extends Controller
      */
     public function create()
     {
-        $regions = OrpRegion::whereIn('id', OrpRegion::ACTIVE_ORP_IDS)->get();
-        $municipalities = Municipality::where('orp_region_id', OrpRegion::VSETIN_ORP_ID)->get();
-        //dd($municipalities);
+        $regions = $this->getRegions();
+        $municipalities = $this->getMunicipalities();
         return View('clients.create', compact('regions', 'municipalities'));
     }
 
@@ -43,7 +44,6 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
         $client = new Client();
         $client->pair_id = $request->client_status == 2 ? 'ZAJ' : Client::getNextPairId();
         $client->code = $request->code;
@@ -61,9 +61,6 @@ class ClientController extends Controller
         $clientDescription->save();
 
         return redirect()->route('clients.show', [$client->id])->with(['message' => 'Nový klient <strong>'.$client->clientCode.'</strong> byl vytvořen.', 'status' => 'success']);
-        //$clients = Client::paginate(50);
-        //return View('clients.index', compact('clients'));
-        //dd($client);
     }
 
     /**
@@ -75,13 +72,11 @@ class ClientController extends Controller
     public function show($id)
     {
         $client  = Client::find($id);
-        $clients = Client::all();
         $records = \App\Models\Record::whereHas('clients', function($query) use($id){
             $query->where('client_id', $id);
         })->get();
         $IPs = \App\Models\IndividualPlan::where('client_id', $id)->get();
-        //dd($records);
-        return View('clients.show', compact('client', 'clients', 'records', 'IPs'));
+        return View('clients.show', compact('client', 'records', 'IPs'));
     }
 
     /**
@@ -93,9 +88,9 @@ class ClientController extends Controller
     public function edit($id)
     {
         $client  = Client::find($id);
-        //dd($client);
-        $clients = Client::all();
-        return View('clients.edit', compact('client', 'clients'));
+        $regions = $this->getRegions();
+        $municipalities = $this->getMunicipalities();
+        return View('clients.edit', compact('client', 'regions', 'municipalities'));
     }
 
     /**
@@ -119,5 +114,15 @@ class ClientController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function getRegions(): Collection
+    {
+        return OrpRegion::whereIn('id', OrpRegion::ACTIVE_ORP_IDS)->get();
+    }
+
+    private function getMunicipalities(): Collection
+    {
+        return Municipality::where('orp_region_id', OrpRegion::VSETIN_ORP_ID)->get();
     }
 }
