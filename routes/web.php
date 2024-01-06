@@ -37,4 +37,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('records', \App\Http\Controllers\RecordController::class);
 });
 
+Route::get('/get-municipalities/{orpId}', [\App\Http\Controllers\MyController::class, 'getMunicipalities'])->name('municipalities');
+
 require __DIR__.'/auth.php';

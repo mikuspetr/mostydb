@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MunicipalityResource;
+use App\Models\Address\Municipality;
+use App\Models\Address\OrpRegion;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,5 +41,10 @@ class MyController extends Controller
         $clients = \App\Models\Client::get();
         //dd($clients);
         return view('debug', ['clients' => $clients]);
+    }
+
+    public function getMunicipalities($orpId)
+    {
+        return MunicipalityResource::collection(Municipality::where('orp_region_id', $orpId)->get());
     }
 }
