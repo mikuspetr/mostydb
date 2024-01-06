@@ -36,6 +36,16 @@ class Client extends Model
         return $this->hasOne(\App\Models\ClientDescription::class)->withDefault();
     }
 
+    public function municipality()
+    {
+        return $this->belongsTo(\App\Models\Address\Municipality::class);
+    }
+
+    public function getMunOrpAttribute(): string
+    {
+        return isset($this->municipality) ? $this->municipality->name . ' (orp. ' . $this->municipality->orp->name . ')' : '';
+    }
+
     public static function getNextPairId()
     {
         $lastClient = \App\Models\Client::where('pair_id', '!=', 'ZAJ')->orderByDesc('pair_id')->first();

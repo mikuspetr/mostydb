@@ -23,7 +23,8 @@ class ClientSeeder extends Seeder
                 'sex_id' => $klient->pohlavi == 'M' ? Client::MALE_ID : Client::FEMALE_ID,
                 'pair_id' => $klient->uzivatel,
                 'type_id' => $klient->zarazeni == 'Z' ? Client::ADDICTED_ID : Client::NEUROTIC_ID,
-                'contract' => $klient->smlouva == '0000-00-00' ? null : $klient->smlouva
+                'contract' => $klient->smlouva == '0000-00-00' ? null : $klient->smlouva,
+                'municipality_id' => $klient->municipality_id,
             ];
         })->toArray();
         DB::table('clients')->insert($klienti);

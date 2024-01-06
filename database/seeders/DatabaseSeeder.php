@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             ClientSeeder::class,
             RecordSeeder::class,
             IPSeeder::class,
-            AddressSeeder::class
+            AddressSeeder::class,
+            PermissionSeeder::class
         ]);
         // \App\Models\User::factory(10)->create();
 
