@@ -31,5 +31,7 @@ class PermissionSeeder extends Seeder
         Role::findByName('admin')->syncPermissions(Permission::get());
         Role::findByName('editor')->syncPermissions(Permission::limit(4)->get());
         Role::findByName('viewer')->givePermissionTo(Permission::findByName('read'));
+
+        \App\Models\User::find(4)->assignRole('admin');
     }
 }

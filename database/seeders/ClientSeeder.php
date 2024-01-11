@@ -22,7 +22,7 @@ class ClientSeeder extends Seeder
                 'code' => $klient->kod,
                 'sex_id' => $klient->pohlavi == 'M' ? Client::MALE_ID : Client::FEMALE_ID,
                 'pair_id' => $klient->uzivatel,
-                'type_id' => $klient->zarazeni == 'Z' ? Client::ADDICTED_ID : Client::NEUROTIC_ID,
+                'category_id' => $klient->zarazeni == 'Z' ? Client::ADDICTED_ID : Client::NEUROTIC_ID,
                 'contract' => $klient->smlouva == '0000-00-00' ? null : $klient->smlouva,
                 'municipality_id' => $klient->municipality_id,
             ];
@@ -43,7 +43,7 @@ class ClientSeeder extends Seeder
             ['id' => Client::MALE_ID, 'name' => 'Muž'],
             ['id' => Client::FEMALE_ID, 'name' => 'Žena']
         ]);
-        DB::table('client_types')->insert([
+        DB::table('client_categories')->insert([
             ['id' => Client::ADDICTED_ID, 'name' => 'Závislí'],
             ['id' => Client::NEUROTIC_ID, 'name' => 'Neurotici']
         ]);

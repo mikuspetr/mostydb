@@ -16,6 +16,14 @@ class MyController extends Controller
 {
     public function debug(Request $request)
     {
+        $records = \App\Models\Record::whereDoesntHave('clients')->get();
+        foreach($records as $record)
+        {
+            echo $record->text;
+        }
+        dd($records);
+        $client = \App\Models\Client::find(270);
+        dd($client->description);
         $routeCurrent = Route::is('debug');
         dd($routeCurrent);
         //$role = Role::create(['name' => 'editor']);

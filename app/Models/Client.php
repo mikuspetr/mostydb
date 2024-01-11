@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,9 +19,9 @@ class Client extends Model
     const NEW_ADICTED_ID = 501;
     const NEW_NEUROTIC_ID = 502;
 
-    public function type()
+    public function category()
     {
-        return $this->belongsTo(\App\Models\ClientType::class);
+        return $this->belongsTo(\App\Models\ClientCategory::class);
     }
     public function sex()
     {
@@ -28,7 +30,7 @@ class Client extends Model
 
     public function getClientCodeAttribute()
     {
-        return 'SNP-' . $this->code . mb_substr($this->sex->name, 0,1) . '-' . $this->pair_id . '-' . mb_substr($this->type->name, 0,1);
+        return 'SNP-' . $this->code . mb_substr($this->sex->name, 0,1) . '-' . $this->pair_id . '-' . mb_substr($this->category->name, 0,1);
     }
 
     public function description()
@@ -50,5 +52,33 @@ class Client extends Model
     {
         $lastClient = \App\Models\Client::where('pair_id', '!=', 'ZAJ')->orderByDesc('pair_id')->first();
         return $lastClient->pair_id + 1;
+    }
+
+    public function records()
+    {
+        return $this->belongsToMany(\App\Models\Record::class, 'record_clients');
+    }
+
+    public function getHasValidContractAttribute()
+    {
+        $records = $this->records->where('date', '>', Carbon::now()->subMonth(6));
+        return $records->count() && $this->contract;
+    }
+
+    public function getContractDateAttribute(): string
+    {
+        return isset($this->contract) ? Carbon::parse($this->contract)->format('j. n. Y') : '';
+    }
+
+    public function getTypeAttribute(): string
+    {
+        return $this->pair_id === 'ZAJ' ? 'Zájemce' : 'Uživatel';
+    }
+
+    public function scopeWithValidContract(Builder $query)
+    {
+        return $query->whereNotNull('contract')->whereHas('records', function($query){
+            $query->where('date', '>', Carbon::now()->subMonth(6));
+        });
     }
 }

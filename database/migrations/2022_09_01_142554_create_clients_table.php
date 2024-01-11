@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('code');
             $table->foreignId('sex_id');
             $table->string('pair_id');
-            $table->foreignId('type_id');
+            $table->foreignId('category_id');
             $table->foreignId('municipality_id')->nullable();
             $table->date('contract')->nullable();
             $table->timestamps();

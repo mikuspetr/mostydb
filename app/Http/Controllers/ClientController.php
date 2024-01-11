@@ -18,10 +18,15 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $clients = Client::paginate(50);
-        return View('clients.index', compact('clients'));
+        if(isset($request->active_complaint) && $request->active_complaint == 1)
+        {
+            $clients = Client::withValidContract()->paginate(50);
+        } else {
+            $clients = Client::paginate(50);
+        }
+        return View('clients.index', compact('clients', 'request'));
     }
 
     /**
@@ -45,20 +50,11 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $client = new Client();
-        $client->pair_id = $request->client_status == 2 ? 'ZAJ' : Client::getNextPairId();
-        $client->code = $request->code;
-        $client->sex_id = $request->sex_id;
-        $client->type_id = $request->type_id;
-        $client->municipality_id = $request->municipality_id;
-        $client->contract = $request->contract;
-        $client->save();
+        $this->requestToClient($request, $client);
 
         $clientDescription = new ClientDescription();
         $clientDescription->client_id = $client->id;
-        $clientDescription->first_contact = $request->first_contact;
-        $clientDescription->personal = $request->personal;
-        $clientDescription->social = $request->social;
-        $clientDescription->save();
+        $this->requestToDescription($request, $clientDescription);
 
         return redirect()->route('clients.show', [$client->id])->with(['message' => 'Nový klient <strong>'.$client->clientCode.'</strong> byl vytvořen.', 'status' => 'success']);
     }
@@ -87,9 +83,10 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        $client  = Client::find($id);
+        $client = Client::find($id);
         $regions = $this->getRegions();
-        $municipalities = $this->getMunicipalities();
+        $regionId = isset($client->municipality_id) ? $client->municipality->orp_region_id : null;
+        $municipalities = $this->getMunicipalities($regionId);
         return View('clients.edit', compact('client', 'regions', 'municipalities'));
     }
 
@@ -102,7 +99,10 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $client = Client::find($id);
+        $this->requestToClient($request, $client);
+        $this->requestToDescription($request, $client->description);
+        return redirect()->route('clients.show', [$id])->with(['message' => 'Změny u klienta <strong>'.$client->clientCode.'</strong> byly uloženy.', 'status' => 'success']);
     }
 
     /**
@@ -121,8 +121,27 @@ class ClientController extends Controller
         return OrpRegion::whereIn('id', OrpRegion::ACTIVE_ORP_IDS)->get();
     }
 
-    private function getMunicipalities(): Collection
+    private function getMunicipalities($orpId = null): Collection
     {
-        return Municipality::where('orp_region_id', OrpRegion::VSETIN_ORP_ID)->get();
+        return Municipality::where('orp_region_id', $orpId)->get();
+    }
+
+    private function requestToClient(Request $request, Client $client)
+    {
+        $client->pair_id = $request->client_type == 2 ? 'ZAJ' : Client::getNextPairId();
+        $client->code = $request->code;
+        $client->sex_id = $request->sex_id;
+        $client->category_id = $request->category_id;
+        $client->municipality_id = $request->municipality_id;
+        $client->contract = $request->contract;
+        $client->save();
+    }
+
+    private function requestToDescription(Request $request, ClientDescription $clientDescription)
+    {
+        $clientDescription->first_contact = $request->first_contact;
+        $clientDescription->personal = $request->personal;
+        $clientDescription->social = $request->social;
+        $clientDescription->save();
     }
 }

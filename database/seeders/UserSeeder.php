@@ -47,20 +47,5 @@ class UserSeeder extends Seeder
 
         ];
         DB::table('users')->insert($users);
-        /*
-        $uzivatel = DB::connection('mostyold')->table('pracovnici')->get();//->map(function ($uzivatel) {
-            dd($uzivatel);
-/*
-            return [
-                'id' => $uzivatel->id,
-                'first_name' => $uzivatel->jmeno,
-                'last_name' => $uzivatel->prijmeni,
-                'email' => $uzivatel->mail,
-                'password' => bcrypt('TajneHeslo'),
-                //'crm_id' => $uzivatel->crm_id,
-                //'files_folder' => $uzivatel->files_folder,
-            ];
-        })->toArray();
-        */
     }
 }
