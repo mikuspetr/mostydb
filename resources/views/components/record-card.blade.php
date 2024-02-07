@@ -4,6 +4,7 @@
 
         <span class="mx-4">{{$record->place->name ?? ''}} - {{ Carbon\Carbon::parse($record->date)->format('j. n. Y')}}</span>
         <span class="mx-4">{{ $record->duration }}</span>
+        <a class="btn btn-outline-primary btn-sm float-end" href="{{route('records.edit', ['record' => $record->id])}}" title="upravit"><i class="bi bi-pencil"></i> upravit záznam</a>
     </div>
     <div class="card-body row">
         <div class="col-sm-2 border-end">

@@ -1,4 +1,5 @@
 @extends('templates.main')
 @section('content')
-OK
+OK 00<br>
+<increment-counter />
 @endsection

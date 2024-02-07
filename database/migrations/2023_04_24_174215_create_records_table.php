@@ -21,7 +21,7 @@ return new class extends Migration
             $table->smallInteger('duration')->nullable();
             $table->smallInteger('duration_pp')->nullable();
             $table->boolean('intervention');
-            $table->foreignId('status_id')->nullable();
+            $table->foreignId('color_id')->nullable();
             $table->text('text')->nullable();
             $table->timestamps();
         });

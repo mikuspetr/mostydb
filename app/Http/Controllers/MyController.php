@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\MunicipalityResource;
 use App\Models\Address\Municipality;
 use App\Models\Address\OrpRegion;
+use App\Models\RecordClient;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,11 +17,30 @@ class MyController extends Controller
 {
     public function debug(Request $request)
     {
+        $record = \App\Models\Record::find(4709);
+
+        $clientsColl = \App\Models\Client::limit(3)->get();
+        dump($record->clients->pluck('id')->toArray(), $clientsColl->pluck('id')->toArray());
+        dump(array_diff($record->clients->pluck('id')->toArray(), $record->clients->pluck('id')->toArray()));
+        dump(array_diff($clientsColl->pluck('id')->toArray()), $record->clients->pluck('id')->toArray());
+        dd(array_diff($record->clients->pluck('id')->toArray(), $clientsColl->pluck('id')->toArray()));
+        $client = \App\Models\Client::find(5);
+
+        $clientsArray = $clientsColl->map(function($client) use ($record){
+                return [
+                    'record_id' => $record->id,
+                    'client_id' => $client->id
+                ];
+        })->filter(function($item) use($record){
+            return !$record->hasClientId($item['client_id']);
+        })->toArray();
+
+        dd($clientsColl, $client, $clientsArray);
+        dd($record->clients->where('id', $client->id)->count());
+        dd($record->clients, $client);
+        $r = RecordClient::first();
+        dd($r);
         $records = \App\Models\Record::whereDoesntHave('clients')->get();
-        foreach($records as $record)
-        {
-            echo $record->text;
-        }
         dd($records);
         $client = \App\Models\Client::find(270);
         dd($client->description);

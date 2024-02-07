@@ -1,31 +1,31 @@
 @extends('templates.main')
 @section('content')
     <x-crud.header>Nový záznam</x-crud.header>
-
-    <form method="POST" action="{{ route('records.create') }}">
-        <div class="row">
-            <div class="col-sm-2">
-                <label for="date" class="form-label">Datum</label>
-                <input type="date" name="date" id="date" class="form-control">
-                <br>
-                <label><input type="radio" name="place" value="1" class="form-check-input"> Vsetín</label>
-                <label><input type="radio" name="place" value="2" class="form-check-input"> Val.Mez.</label>
-                <label><input type="radio" name="place" value="3" class="form-check-input"> Jinde</label>
-                <br>
-                <label for="client" class="form-label">Klient</label>
-                <select name="client" id="client" class="form-select">
-                    @foreach ($clients as $id => $code)
-                        <option value="{{ $id }}">{{ $code }}</option>
-                    @endforeach
-                </select>
-                <label for="user" class="form-label">Pracovník</label>
-                <select name="user" id="user" class="form-select">
-                    @foreach ($users as $id => $login)
-                        <option value="{{ $id }}">{{ $login }}</option>
-                    @endforeach
-                </select>
-            </div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="individual-tab" data-bs-toggle="tab" data-bs-target="#individual" type="button"
+                role="tab" aria-controls="individual" aria-selected="true">individuální</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="group-tab" data-bs-toggle="tab" data-bs-target="#group" type="button"
+                role="tab" aria-controls="group" aria-selected="false">Skupinová</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button"
+                role="tab" aria-controls="contact" aria-selected="false">Kontakt</button>
+        </li>
+    </ul>
+    <div class="tab-content mt-3" id="myTabContent">
+        <div class="tab-pane fade show active" id="individual" role="tabpanel" aria-labelledby="home-tab">
+            @include('forms.record-individual-form')
         </div>
+        <div class="tab-pane fade" id="group" role="tabpanel" aria-labelledby="profile-tab">
+            @include('forms.record-group-form')
+        </div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            @include('forms.record-contact-form')
+        </div>
+    </div>
 
-    </form>
+
 @endsection

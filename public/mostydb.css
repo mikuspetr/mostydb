@@ -21,3 +21,9 @@
 .crud-header__button {
     margin-left: auto;
 }
+
+.form-label {
+    margin-bottom: 0.3rem;
+    margin-top: 1rem;
+    font-weight: 600;
+}

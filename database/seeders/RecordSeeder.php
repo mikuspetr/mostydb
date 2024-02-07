@@ -41,29 +41,31 @@ class RecordSeeder extends Seeder
         $types = DB::connection('mostyold')->table('typ2')->get()->map(function ($type) {
             return [
                 'id' => $type->id,
-                'name' => $type->typ2
+                'name' => $type->typ2,
+                'record_kind' => 'intervention'
             ];
         })->toArray();
         DB::table('record_types')->insert($types);
+        DB::table('record_types')->where('id', '>', 3)->update(['record_kind' => 'contact']);
 
-        $statuses = [
+        $colors = [
             [
-                'id' => \App\Models\Status::GREEN,
+                'id' => \App\Models\RecordColor::GREEN,
                 'name' => 'Zelená',
                 'color' => 'limegreen',
             ],
             [
-                'id' => \App\Models\Status::BLUE,
+                'id' => \App\Models\RecordColor::BLUE,
                 'name' => 'Modrá',
                 'color' => 'blue',
             ],
             [
-                'id' => \App\Models\Status::RED,
+                'id' => \App\Models\RecordColor::RED,
                 'name' => 'Červená',
                 'color' => 'red',
             ],
         ];
-        DB::table('statuses')->insert($statuses);
+        DB::table('record_colors')->insert($colors);
 
         $zaznamy = DB::connection('mostyold')->table('zaznamy')->get();//->chunk(50)->toArray();
         $skupiny = DB::connection('mostyold')->table('int_skupinova')->select(['zaznam', 'klient'])->where('klient', '>', 0)->get();
@@ -76,13 +78,13 @@ class RecordSeeder extends Seeder
         {
             $status = null;
             if($zaznam->oznaceni == 'limegreen'){
-                $status = \App\Models\Status::GREEN;
+                $status = \App\Models\RecordColor::GREEN;
             }
             if($zaznam->oznaceni == 'blue'){
-                $status = \App\Models\Status::BLUE;
+                $status = \App\Models\RecordColor::BLUE;
             }
             if($zaznam->oznaceni == 'red'){
-                $status = \App\Models\Status::RED;
+                $status = \App\Models\RecordColor::RED;
             }
             array_push($records, [
                 'id' => $zaznam->id,
@@ -94,7 +96,7 @@ class RecordSeeder extends Seeder
                 'duration' => $zaznam->cas,
                 'duration_pp' => $zaznam->cas_pp,
                 'text' => $zaznam->text,
-                'status_id' => $status,
+                'color_id' => $status,
                 'intervention' => $zaznam->intervence,
             ]);
             if($zaznam->klient > 0) {

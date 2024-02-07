@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('record_types', function (Blueprint $table) {
+        Schema::create('record_colors', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('record_kind');
+            $table->string('name', 100);
+            $table->string('color', 100);
+            $table->string('color_class', 100)->nullable();
+            $table->string('color_hex', 20)->nullable();
         });
     }
 
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('record_types');
+        Schema::dropIfExists('record_colors');
     }
 };

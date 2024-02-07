@@ -28,14 +28,4 @@
             $(this).removeClass('text-danger');
         }
     });
-
-    window.editors = {};
-
-    document.querySelectorAll( '.ckeditor' ).forEach( ( node, index ) => {
-        ClassicEditor
-            .create( node, {} )
-            .then( newEditor => {
-                window.editors[ index ] = newEditor
-            } );
-    } );
 </script>

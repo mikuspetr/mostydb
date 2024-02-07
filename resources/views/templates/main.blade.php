@@ -5,7 +5,7 @@
     <body>
         @include('templates.menu')
         @hasSection('content')
-            <section id="content" class="container-fluid">
+            <section id="app" class="container-fluid">
                 @yield('content')
             </section>
         @endif
@@ -19,4 +19,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     --}}
 @stack('scripts')
+<script>
+    document.querySelectorAll('.ckeditor').forEach((node, index) => {
+        ClassicEditor
+            .create(node, {})
+            .then(newEditor => {
+                window.editors[index] = newEditor
+            });
+    });
+</script>
 </html>
