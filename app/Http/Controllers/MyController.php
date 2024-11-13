@@ -17,6 +17,11 @@ class MyController extends Controller
 {
     public function debug(Request $request)
     {
+        $clients = \App\Models\Client::whereHas('records',function($query){
+            return $query->where('date', '>', '2023-01-01')->where('date', '<', '2024-01-01');
+        })->get();
+        dd($clients);
+
         $record = \App\Models\Record::find(4709);
 
         $clientsColl = \App\Models\Client::limit(3)->get();

@@ -20,6 +20,8 @@
                     </option>
                 @endforeach
             </select>
+            <br>
+            <multiple-select ></multiple-select>
             <label for="user" class="form-label">Pracovníci</label>
             <select name="users[]" id="user" class="form-select" multiple>
                 @foreach ($users as $user)

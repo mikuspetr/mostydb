@@ -103,5 +103,5 @@
     </div>
     <input type="hidden" name="kind_id" value="1">
     <input type="hidden" name="intervention" value="1">
-    <button type="submit" class="btn btn-primary">Přidat záznam</button>
+    <button type="submit" class="btn btn-primary">{{isset($record) ? 'Upravit Záznam' : 'Přidat záznam' }}</button>
 </form>

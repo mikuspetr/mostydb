@@ -10,5 +10,9 @@
         "axios": "^1.6.7",
         "laravel-vite-plugin": "^1.0.1",
         "vite": "^5.0.12"
+    },
+    "dependencies": {
+        "@ckeditor/ckeditor5-vue": "^6.0.0",
+        "ckeditor5": "^42.0.2"
     }
 }

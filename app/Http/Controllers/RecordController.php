@@ -14,7 +14,7 @@ class RecordController extends Controller
      */
     public function index()
     {
-        $records = \App\Models\Record::where('kind_id', 2)->orderByDesc('id')->paginate(50);
+        $records = \App\Models\Record::/*where('kind_id', 2)->*/orderByDesc('id')->paginate(50);
         /*
         $records = \App\Models\Record::get()->filter(function($record){
             return $record->users->count() > 1;
@@ -45,6 +45,7 @@ class RecordController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         $record = new Record();
         $this->requestToRecord($request, $record);
         $this->saveRecordClients($request, $record);
@@ -85,6 +86,7 @@ class RecordController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        //dd($request->all(), $id);
         $record = Record::find($id);
         $this->requestToRecord($request, $record);
         if(!empty(array_diff($record->clients->pluck('id')->toArray(), $request->clients))) {
@@ -118,7 +120,6 @@ class RecordController extends Controller
         $record->kind_id = $request->kind_id;
         $record->text = $request->text;
         $record->save();
-
     }
 
     private function saveRecordClients(Request $request, Record $record)
