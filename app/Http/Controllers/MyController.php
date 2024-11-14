@@ -12,11 +12,15 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Auth;
 
 class MyController extends Controller
 {
     public function debug(Request $request)
     {
+        if(!Auth::user()->hasRole('admin')) {
+            return redirect()->route('home');
+        }
         $clients = \App\Models\Client::whereHas('records',function($query){
             return $query->where('date', '>', '2023-01-01')->where('date', '<', '2024-01-01');
         })->get();

@@ -23,9 +23,11 @@
                     <li class="nav-item">
                         <a class="nav-link {{Route::is('summary.*') ? 'active' : ''}}" href="{{route('summary.clients', ['from'=>'2023-01-01', 'to'=>'2023-12-31'])}}">Přehledy</a>
                     </li>
+                    @if(Auth::user()->hasRole('admin'))
                     <li class="nav-item">
                         <a class="nav-link {{Route::is('debug.*') ? 'active' : ''}}" href="{{route('debug')}}">Debug</a>
                     </li>
+                    @endif
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
