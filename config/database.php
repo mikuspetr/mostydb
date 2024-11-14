@@ -68,7 +68,7 @@ return [
             'driver' => 'mysql',
             'host'      => env('DB_HOST'),
             'port'      => env('DB_PORT'),
-            'database'  => 'mostyold',
+            'database'  => env('DB_DATABASE_SECOND'),
             'username'  => env('DB_USERNAME'),
             'password'  => env('DB_PASSWORD'),
             'charset' => 'utf8mb4',
