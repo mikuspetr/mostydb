@@ -5,7 +5,6 @@
             <td>{{ $row['name'] }}</td>
             <td>{{ $row['neurotics'] }}</td>
             <td>{{ $row['adicts'] }}</td>
-            <td>{{ $row['count'] }}</td>
             <td>{{ $row['neurotics'] + $row['adicts'] }}</td>
         </tr>
     @endforeach

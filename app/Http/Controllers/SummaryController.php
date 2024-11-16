@@ -99,7 +99,7 @@ class SummaryController extends Controller
         $overview = [
             'contacts' => [
                 'name' => 'Kontakty',
-                'count' => Record::whereIn('place_id', $places)->fromTo($from, $to)->count(),
+                //'count' => Record::whereIn('place_id', $places)->fromTo($from, $to)->count(),
                 'neurotics' => Record::whereIn('place_id', $places)->fromTo($from, $to)->neurotics()->count(),
                 'adicts' => Record::whereIn('place_id', $places)->fromTo($from, $to)->adicts()->count(),
             ],
@@ -107,29 +107,29 @@ class SummaryController extends Controller
                 'name' => 'Individuální intervence',
                 'neurotics' => Record::whereIn('place_id', $places)->fromTo($from, $to)->individualInterventions()->neurotics()->count(),
                 'adicts' => Record::whereIn('place_id', $places)->fromTo($from, $to)->individualInterventions()->adicts()->count(),
-                'count' => Record::whereIn('place_id', $places)->fromTo($from, $to)->individualInterventions()->count(),
+                //'count' => Record::whereIn('place_id', $places)->fromTo($from, $to)->individualInterventions()->count(),
             ],
             'interdiciplinars' => [
                 'name' => 'Interdisciplinární intervence',
                 'neurotics' => Record::whereIn('place_id', $places)->fromTo($from, $to)->interdiciplinarInterventions()->neurotics()->count(),
                 'adicts' => Record::whereIn('place_id', $places)->fromTo($from, $to)->interdiciplinarInterventions()->adicts()->count(),
-                'count' => Record::whereIn('place_id', $places)->fromTo($from, $to)->interdiciplinarInterventions()->count(),
+                //'count' => Record::whereIn('place_id', $places)->fromTo($from, $to)->interdiciplinarInterventions()->count(),
             ],
             'individuals-duration' => [
                 'name' => 'Individuální intervence - čas',
                 'neurotics' => Record::whereIn('place_id', $places)->fromTo($from, $to)->individualInterventions()->neurotics()->duration(),
                 'adicts' => Record::whereIn('place_id', $places)->fromTo($from, $to)->individualInterventions()->adicts()->duration(),
-                'count' => Record::whereIn('place_id', $places)->fromTo($from, $to)->individualInterventions()->duration(),
+                //'count' => Record::whereIn('place_id', $places)->fromTo($from, $to)->individualInterventions()->duration(),
             ],
             'interdiciplinars-duration' => [
                 'name' => 'Interdisciplinární intervence - čas',
                 'neurotics' => Record::whereIn('place_id', $places)->fromTo($from, $to)->interdiciplinarInterventions()->neurotics()->duration(),
                 'adicts' => Record::whereIn('place_id', $places)->fromTo($from, $to)->interdiciplinarInterventions()->adicts()->duration(),
-                'count' => Record::whereIn('place_id', $places)->fromTo($from, $to)->interdiciplinarInterventions()->duration(),
+                //'count' => Record::whereIn('place_id', $places)->fromTo($from, $to)->interdiciplinarInterventions()->duration(),
             ],
             'contacts-pp' => [
                 'name' => 'Přímá práce - čas',
-                'count' => Record::whereIn('place_id', $places)->fromTo($from, $to)->durationPP(),
+                //'count' => Record::whereIn('place_id', $places)->fromTo($from, $to)->durationPP(),
                 'neurotics' => Record::whereIn('place_id', $places)->fromTo($from, $to)->neurotics()->durationPP(),
                 'adicts' => Record::whereIn('place_id', $places)->fromTo($from, $to)->adicts()->durationPP(),
             ],
@@ -137,13 +137,13 @@ class SummaryController extends Controller
                 'name' => 'Skupinové intervence',
                 'neurotics' => Record::whereIn('place_id', $places)->fromTo($from, $to)->groupInterventions()->neurotics()->count(),
                 'adicts' => Record::whereIn('place_id', $places)->fromTo($from, $to)->groupInterventions()->adicts()->count(),
-                'count' => Record::whereIn('place_id', $places)->fromTo($from, $to)->groupInterventions()->count(),
+                //'count' => Record::whereIn('place_id', $places)->fromTo($from, $to)->groupInterventions()->count(),
             ],
             'groups-duration' => [
                 'name' => 'Skupinové intervence - čas',
                 'neurotics' => Record::whereIn('place_id', $places)->fromTo($from, $to)->groupInterventions()->neurotics()->duration(),
                 'adicts' => Record::whereIn('place_id', $places)->fromTo($from, $to)->groupInterventions()->adicts()->duration(),
-                'count' => Record::whereIn('place_id', $places)->fromTo($from, $to)->groupInterventions()->duration(),
+                //'count' => Record::whereIn('place_id', $places)->fromTo($from, $to)->groupInterventions()->duration(),
             ],
         ];
 
