@@ -86,7 +86,7 @@
             @endforeach
             <br>
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-8">
             <label for="text">Text intervence</label>
             <textarea name="text" id="text" class="ckeditor"></textarea>
         </div>

@@ -12,5 +12,6 @@ class RecordKind extends Model
 
     const INDIVIDUAL_ID = 1;
     const GROUP_ID = 2;
+    const INTERDISCIPLINARY_ID = 3;
     const CONTACT_ID = 4;
 }

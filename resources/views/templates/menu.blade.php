@@ -21,7 +21,7 @@
                         <a class="nav-link {{Route::is('records.*') ? 'active' : ''}}" href="{{route('records.index')}}">Záznamy</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{Route::is('summary.*') ? 'active' : ''}}" href="{{route('summary.clients', ['from'=>'2023-01-01', 'to'=>'2023-12-31'])}}">Přehledy</a>
+                        <a class="nav-link {{Route::is('summary.*') ? 'active' : ''}}" href="{{route('summary.index', ['year' => date('Y')])}}">Přehledy</a>
                     </li>
                     @if(Auth::user()->hasRole('admin'))
                     <li class="nav-item">
@@ -50,4 +50,7 @@
             </div>
         </div>
     </nav>
+    @if(Route::is('summary.*'))
+        @include('components.nav._nav-summary')
+    @endif
 </section>

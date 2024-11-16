@@ -54,12 +54,12 @@ class Client extends Model
         return $lastClient->pair_id + 1;
     }
 
-    public function records()
+    public function records(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(\App\Models\Record::class, 'record_clients');
     }
 
-    public function getHasValidContractAttribute()
+    public function getHasValidContractAttribute(): bool
     {
         $records = $this->records->where('date', '>', Carbon::now()->subMonth(6));
         return $records->count() && $this->contract;

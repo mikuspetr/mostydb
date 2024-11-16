@@ -36,7 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', \App\Http\Controllers\UserController::class);
     Route::resource('records', \App\Http\Controllers\RecordController::class);
 
-    Route::get('/summary', [\App\Http\Controllers\SummaryController::class, 'clients'])->name('summary.clients');
+    Route::get('/summary', [\App\Http\Controllers\SummaryController::class, 'index'])->name('summary.index');
+    Route::get('/summary/cilents', [\App\Http\Controllers\SummaryController::class, 'clients'])->name('summary.clients');
 });
 
 Route::get('/get-municipalities/{orpId}', [\App\Http\Controllers\MyController::class, 'getMunicipalities'])->name('municipalities');

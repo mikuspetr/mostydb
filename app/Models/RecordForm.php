@@ -9,4 +9,8 @@ class RecordForm extends Model
 {
     use HasFactory;
     public $timestamps = false;
+
+    const PERSONAL = 1;
+    const PHONE = 2;
+    const TEXT = 3;
 }

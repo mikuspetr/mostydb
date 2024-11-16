@@ -3,12 +3,12 @@
 @section('content')
 <x-crud.header>Záznamy</x-crud.header>
 <table class="table">
-    <thead><tr><td>#</td><td>Datum</td><td>Místo</td><td>Pracovník</td><td>Klient</td><td>Forma</td><td>Typ</td><td>Délka</td><td>Text</td></tr></thead>
+    <thead><tr><td class='crud-action-column'>#</td><td>Datum</td><td>Místo</td><td>Pracovník</td><td>Klient</td><td>Forma</td><td>Typ</td><td>Délka</td><td>Text</td></tr></thead>
     <tbody>
         @foreach($records as $record)
         <tr>
             <td>
-                {{$record->id}}
+                {{$record->id}}<br>
                 <a class="btn btn-outline-primary btn-sm" href="{{route('records.edit', ['record' => $record->id])}}" title="upravit"><i class="bi bi-pencil-square"></i></a>
                 <a class="btn btn-outline-primary btn-sm" href="{{route('records.show', ['record' => $record->id])}}" title="zobrazit"><i class="bi bi-eye"></i></a>
             </td>

@@ -113,4 +113,75 @@ class Record extends Model
     {
         return $this->clients->where('id', $id)->count() > 0;
     }
+
+    public function scopeFromTo($query, $from, $to)
+    {
+        return $query->where('date', '>', $from)->where('date', '<', $to);
+    }
+
+    public function scopeIndividualInterventions($query)
+    {
+        return $query->where('kind_id', 1);
+    }
+    public function scopeGroupInterventions($query)
+    {
+        return $query->where('kind_id', 2);
+    }
+    public function scopeInterdiciplinarInterventions($query)
+    {
+        return $query->where('kind_id', 3);
+    }
+    public function scopeContacts($query)
+    {
+        return $query->where('kind_id', 4);
+    }
+
+    public function scopeByType($query, $type)
+    {
+        return $query->where('type_id', $type);
+    }
+
+    public function scopeAdicts($query)
+    {
+        return $query->whereHas('clients', function($query){
+            return $query->where('category_id', 1);
+        });
+    }
+    public function scopeNeurotics($query)
+    {
+        return $query->whereHas('clients', function($query){
+            return $query->where('category_id', 2);
+        });
+    }
+    public function scopeZajemci($query)
+    {
+        return $query->whereHas('clients', function($query){
+            return $query->where('pair_id', 'ZAJ');
+        });
+    }
+    public function scopeUzivatele($query)
+    {
+        return $query->whereHas('clients', function($query){
+            return $query->where('pair_id', '!=', 'ZAJ');
+        });
+    }
+
+    public function scopeVsetin($query)
+    {
+        return $query->where('place_id', 1);
+    }
+    public function scopeValmez($query)
+    {
+        return $query->where('place_id', 2);
+    }
+
+    public function scopeDuration($query)
+    {
+        return round($query->sum('duration')/60);
+    }
+    public function scopeDurationPP($query)
+    {
+        return round($query->sum('duration_pp')/60);
+    }
+
 }
