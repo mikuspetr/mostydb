@@ -17,6 +17,10 @@
     align-items: center;
     margin: 1rem 0px;
 }
+.crud-header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
 
 .crud-header__button {
     margin-left: auto;
@@ -29,9 +33,39 @@
 }
 
 .crud-action-column {
-    width: 80px;
+    min-width: 100px;
+}
+.sorting-column {
+    min-width: 120px;
+}
+
+.crud-filters label{
+    margin-top: 0px
+}
+
+.btn-xs {
+    --bs-btn-padding-y: 0.1rem;
+    --bs-btn-padding-x: 0.3rem;
+    --bs-btn-font-size: 0.7rem;
 }
 
 h1 {
     font-size: 2.2rem;
+}
+
+mw-150 {
+    max-width: 150px;
+}
+.mw-200 {
+    max-width: 200px;
+}
+.mw-300 {
+    max-width: 300px;
+}
+.mw-400 {
+    max-width: 400px;
+}
+
+.text-limegreen {
+    color: #32cd32;
 }

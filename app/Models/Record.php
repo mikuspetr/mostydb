@@ -33,6 +33,27 @@ class Record extends Model
         return $this->belongsTo(\App\Models\RecordPlace::class);
     }
 
+    public function recordColor(): BelongsTo
+    {
+        return $this->belongsTo(\App\Models\RecordColor::class, 'color_id');
+    }
+
+    public function getBootstrapColorClassAttribute(): string
+    {
+        $color = $this->recordColor ? strtolower($this->recordColor->color) : null;
+
+        return match ($color) {
+            'red' => 'danger',
+            'limegreen' => 'limegreen',
+            'blue' => 'primary',
+            'yellow' => 'warning',
+            'gray', 'grey' => 'secondary',
+            'black' => 'dark',
+            'white' => 'light',
+            default => 'default',
+        };
+    }
+
     public function recordClients(): HasMany
     {
         return $this->hasMany(\App\Models\RecordClient::class);

@@ -25,8 +25,8 @@
                     </option>
                 @endforeach
             </select>
-            <label for="user" class="form-label">Pracovník</label>
-            <select name="users[]" id="user" class="form-select" required>
+            <label for="users" class="form-label">Pracovník</label>
+            <select name="users[]" id="users" class="form-select" required>
                 @foreach ($users as $user)
                     <option value="{{ $user->id }}" {{ isset($record) && $record->hasUserId($user->id) ? 'selected' : '' }}>
                         {{ $user->login }}
@@ -103,5 +103,5 @@
     </div>
     <input type="hidden" name="kind_id" value="1">
     <input type="hidden" name="intervention" value="1">
-    <button type="submit" class="btn btn-primary">{{isset($record) ? 'Upravit Záznam' : 'Přidat záznam' }}</button>
+    <button type="submit" class="btn btn-primary mt-3">{{isset($record) ? 'Upravit intervenci' : 'Přidat intervenci' }}</button>
 </form>
