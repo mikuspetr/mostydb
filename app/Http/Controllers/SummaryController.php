@@ -24,7 +24,12 @@ class SummaryController extends Controller
                 'plan' => 59,
             ];
             $months[] = $row;
+            $total['records'] = ($total['records'] ?? 0) + $row['records'];
+            $total['duration'] = ($total['duration'] ?? 0) + $row['duration'];
+            $total['plan'] = ($total['plan'] ?? 0) + $row['plan'];
+            $total['name'] = 'Celkem';
         }
+        //dd($months, $total);
 
         $from = \Carbon\Carbon::create($year, 1)->startOfYear()->format('Y-m-d');
         $to = \Carbon\Carbon::create($year, 12)->endOfYear()->format('Y-m-d');
@@ -61,7 +66,7 @@ class SummaryController extends Controller
             ],
         ];
 
-        return view('summary.index', compact('year', 'months', 'allPlaces', 'vsetin', 'valmez', 'meetings'));
+        return view('summary.index', compact('year', 'months', 'allPlaces', 'vsetin', 'valmez', 'meetings', 'total'));
     }
 
     public function clients(Request $request)

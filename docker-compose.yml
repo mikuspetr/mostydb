@@ -1,4 +1,3 @@
-version: '3'
 services:
     laravel.test:
         build:
@@ -104,6 +103,7 @@ services:
           - 8081:80
         environment:
           MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+          UPLOAD_LIMIT: 50M
         links:
           - "mysql:db"
         depends_on:

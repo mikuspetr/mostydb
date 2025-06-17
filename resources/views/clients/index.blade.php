@@ -15,7 +15,7 @@
             </form>
         </div>
         <div class="col-sm-6">
-            {!! $clients->links() !!}
+            {{--{!! $clients->links() !!}--}}
         </div>
     </div>
     <table class="table">
@@ -23,6 +23,7 @@
             <tr>
                 <th>#</th>
                 <th>Kód</th>
+                <th>poslední záznam</th>
                 <th>Smlouva</th>
                 <th>Obec</th>
             </tr>
@@ -32,21 +33,22 @@
                 <tr>
                     <td>
                         {{ $client->id }}
-                        <a class="btn btn-outline-primary btn-sm"
+                        <a class="btn btn-outline-primary btn-xs"
                             href="{{ route('clients.edit', ['client' => $client->id]) }}" title="upravit"><i
                                 class="bi bi-pencil-square"></i></a>
-                        <a class="btn btn-outline-primary btn-sm"
+                        <a class="btn btn-outline-primary btn-xs"
                             href="{{ route('clients.show', ['client' => $client->id]) }}" title="zobrazit"><i
                                 class="bi bi-eye"></i></a>
                     </td>
                     <td>{{ $client->clientCode }}</td>
+                    <td>{{ $client->lastRecordDateFormated }}</td>
                     <td>{{ $client->contractDate }} {{ $client->hasValidContract ? '- aktivní' : '' }}</td>
                     <td>{{ $client->munOrp }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-    {!! $clients->links() !!}
+    {{--{!! $clients->links() !!}--}}
 @endsection
 
 @push('scripts')

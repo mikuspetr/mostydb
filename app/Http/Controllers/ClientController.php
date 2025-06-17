@@ -22,9 +22,9 @@ class ClientController extends Controller
     {
         if(isset($request->active_complaint) && $request->active_complaint == 1)
         {
-            $clients = Client::withValidContract()->paginate(50);
+            $clients = Client::withValidContract()->with('records')->get()->sortByDesc('lastRecordDate');;
         } else {
-            $clients = Client::paginate(50);
+            $clients = Client::with('records')->get()->sortByDesc('lastRecordDate');
         }
         return View('clients.index', compact('clients', 'request'));
     }

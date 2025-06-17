@@ -40,11 +40,18 @@
                 <td>{{ round($month['duration']/$month['plan'], 2) * 100 }}%</td>
             </tr>
             @endforeach
-
+             
+            <tr>
+                <td><strong>Celkem</strong></td>
+                <td><strong>{{ $total['duration'] }}</strong></td>
+                <td><strong>{{ $total['plan'] }}</strong></td>
+                <td><strong>{{ round($total['duration']/$total['plan'], 2) * 100 }}%</strong></td>
+            </tr>
+             
         </table>
     </div>
 
-    <div class="col offset-1">
+    <div class="col">
         <h3>Přehled ukazatelů za rok {{ $year }}</h3>
         @include('summary.__placeOverview', ['overview' => $allPlaces])
 
@@ -55,7 +62,7 @@
         @include('summary.__placeOverview', ['overview' => $valmez])
     </div>
 
-    <div class="col offset-1">
+    <div class="col">
         <h3>Přehled setkání podle času</h3>
         <table class="table">
             <thead>

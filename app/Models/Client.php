@@ -59,6 +59,18 @@ class Client extends Model
         return $this->belongsToMany(\App\Models\Record::class, 'record_clients');
     }
 
+    public function getLastRecordDateAttribute(): ?string
+    {
+        $lastRecord = $this->records->sortByDesc('date')->first();
+        return $lastRecord ? Carbon::parse($lastRecord->date) : null;
+    }
+
+    public function getLastRecordDateFormatedAttribute(): string
+    {
+        $lastRecord = $this->last_record_date;
+        return $lastRecord ? Carbon::parse($lastRecord)->format('j. n. Y') : '';
+    }
+
     public function getHasValidContractAttribute(): bool
     {
         $records = $this->records->where('date', '>', Carbon::now()->subMonth(6));
@@ -80,5 +92,10 @@ class Client extends Model
         return $query->whereNotNull('contract')->whereHas('records', function($query){
             $query->where('date', '>', Carbon::now()->subMonth(6));
         });
+    }
+
+    public function scopeOrderedByLastRecord(Builder $query)
+    {
+        return $query->orderByDesc('record.date');
     }
 }
