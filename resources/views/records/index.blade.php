@@ -65,17 +65,19 @@
                 @endforeach
                 </select>
             </div>
+            
             <div class="col">
                 <label for="color_id" class="form-label">Barva záznamu</label>
                 <select name="color_id" id="color_id" class="form-select">
                     <option value="">-- Všechny --</option>
                     @foreach($recordColors as $color)
-                        <option value="{{ $color->id }}" {{ (old('color_id', $color->id ?? '') == $color->id) ? 'selected' : '' }}>
+                        <option value="{{ $color->id }}" {{ (old('color_id', $colorId ?? '') == $color->id) ? 'selected' : '' }}>
                             {{ $color->name }}
                         </option>
                     @endforeach
                 </select>
             </div>
+
             <div class="col">
                 <label for="date_from" class="form-label">Od</label>
                 <input type="date" name="date_from" id="date_from" class="form-control" value="{{ old('date_from', $dateFrom ?? '') }}">

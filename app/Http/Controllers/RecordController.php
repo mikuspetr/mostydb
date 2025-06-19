@@ -76,8 +76,8 @@ class RecordController extends Controller
         $records = $query->orderBy($sortBy, $sortDir)->paginate(50)->appends($request->all());
 
         return view('records.index', compact(
-            'records', 'clientId', 'userId', 'placeId', 'typeId', 'kindId', 'dateFrom', 'dateTo', 'sortBy', 'sortDir',
-            'clients', 'users', 'places', 'types', 'kinds', 'recordColors', 'colorId'
+            'records', 'clientId', 'userId', 'placeId', 'typeId', 'kindId', 'colorId', 'dateFrom', 'dateTo', 'sortBy', 'sortDir',
+            'clients', 'users', 'places', 'types', 'kinds', 'recordColors'
         ));
     }
 

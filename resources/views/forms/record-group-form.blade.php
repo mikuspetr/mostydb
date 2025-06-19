@@ -1,29 +1,34 @@
-<form method="POST" action="{{ route('records.store') }}">
+<form method="POST" action="{{ isset($record) ? route('records.update', [$record->id]) : route('records.store') }}">
     @csrf
+    @if(isset($record))
+    @method('PUT')
+    @endif
     <div class="row">
         <div class="col-sm-3">
             <label for="date" class="form-label mt-0">Datum</label>
-            <input type="date" name="date" id="date" class="form-control" required>
+            <input type="date" name="date" value="{{ isset($record) ? $record->date : date('Y-m-d')}}" id="date" class="form-control" required>
 
             <label class="form-label">Místo</label><br>
-            <label><input type="radio" name="place" value="1" class="form-check-input" checked> Vsetín</label>
-            <label class="ms-3"><input type="radio" name="place" value="2" class="form-check-input">
-                Val.Mez.</label>
-            <label class="ms-3"><input type="radio" name="place" value="3" class="form-check-input">
-                Jinde</label>
+            @foreach ($places as $place)
+                <label class="{{ $loop->first ? '' : 'ms-3' }}">
+                    <input type="radio" name="place_id" value="{{ $place->id }}" class="form-check-input"
+                        {{ (isset($record) && $record->place_id == $place->id) || $loop->first ? 'checked' : '' }}>
+                    {{ $place->name }}
+                </label>
+            @endforeach
             <br>
-            <label for="client" class="form-label">Klienti</label>
-            <select name="clients[]" id="client" class="form-select" multiple>
+
+            <label for="clients" class="form-label">Klient</label>
+            <select name="clients[]" id="clients" class="form-select" multiple>
                 @foreach ($clients as $client)
-                    <option value="{{ $client->id }}"  {{ isset($record) && $record->hasClientId($client->id) ? 'selected' : '' }}>
-                        {{ $client->clientCode }}
-                    </option>
+                    <option value="{{ $client->id }}" {{ isset($record) && $record->hasClientId($client->id) ? 'selected' : '' }}>{{ $client->clientCode }}</option>
                 @endforeach
             </select>
-            <br>
-            <multiple-select ></multiple-select>
-            <label for="user" class="form-label">Pracovníci</label>
-            <select name="users[]" id="user" class="form-select" multiple>
+
+            
+            
+            <label for="users" class="form-label">Pracovníci</label>
+            <select name="users[]" id="users" class="form-select" multiple>
                 @foreach ($users as $user)
                     <option value="{{ $user->id }}" {{ isset($record) && $record->hasUserId($user->id) ? 'selected' : '' }}>
                         {{ $user->login }}
@@ -36,17 +41,21 @@
                 <div class="col">
                     <label for="duration" class="form-label">Čas intervence</label>
                     <select name="duration" id="duration" class="form-select">
-                        <option value="10">10 min</option>
-                        <option value="20">20 min</option>
-                        <option value="30">30 min</option>
+                        @foreach($groupDurations as $value => $duration)
+                            <option value="{{$value}}" {{ isset($record) && $record->duration == $value ? 'selected' : '' }}>
+                                {{$duration}}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col">
                     <label for="duration_pp" class="form-label">Čas přímé péče</label>
                     <select name="duration_pp" id="duration_pp" class="form-select">
-                        <option value="10">10 min</option>
-                        <option value="20">20 min</option>
-                        <option value="30">30 min</option>
+                        @foreach($groupDurations as $value => $duration)
+                            <option value="{{$value}}" {{ isset($record) && $record->duration_pp == $value ? 'selected' : '' }}>
+                                {{$duration}}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -88,7 +97,7 @@
         </div>
         <div class="col-sm-8">
             <label for="text">Text intervence</label>
-            <textarea name="text" id="text" class="ckeditor"></textarea>
+            <textarea name="text" id="text" class="ckeditor">{{ isset($record) ? $record->text : '' }}</textarea>
         </div>
         <div class="col-sm-4">
 
@@ -96,5 +105,5 @@
     </div>
     <input type="hidden" name="kind_id" value="2">
     <input type="hidden" name="intervention" value="1">
-    <button type="submit" class="btn btn-primary">Přidat záznam</button>
+    <button type="submit" class="btn btn-primary mt-3">{{isset($record) ? 'Upravit skupinovou intervenci' : 'Přidat skupinovou intervenci' }}</button>
 </form>
