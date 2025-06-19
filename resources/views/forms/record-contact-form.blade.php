@@ -1,5 +1,8 @@
-<form method="POST" action="{{ route('records.store') }}">
+<form method="POST" action="{{ isset($record) ? route('records.update', [$record->id]) : route('records.store') }}">
     @csrf
+    @if(isset($record))
+    @method('PUT')
+    @endif
     <div class="row">
         <div class="col-sm-3">
             <label for="date" class="form-label mt-0">Datum</label>

@@ -138,6 +138,18 @@ class SummaryController extends Controller
                 'neurotics' => Record::whereIn('place_id', $places)->fromTo($from, $to)->neurotics()->durationPP(),
                 'adicts' => Record::whereIn('place_id', $places)->fromTo($from, $to)->adicts()->durationPP(),
             ],
+            'contacts-pp-zaj' => [
+                'name' => 'Přímá práce zájemci - čas',
+                //'count' => Record::whereIn('place_id', $places)->fromTo($from, $to)->durationPP(),
+                'neurotics' => Record::whereIn('place_id', $places)->fromTo($from, $to)->zajemci()->neurotics()->durationPP(),
+                'adicts' => Record::whereIn('place_id', $places)->fromTo($from, $to)->zajemci()->adicts()->durationPP(),
+            ],
+            'contacts-pp-uz' => [
+                'name' => 'Přímá práce uživatelé - čas',
+                //'count' => Record::whereIn('place_id', $places)->fromTo($from, $to)->durationPP(),
+                'neurotics' => Record::whereIn('place_id', $places)->fromTo($from, $to)->uzivatele()->neurotics()->durationPP(),
+                'adicts' => Record::whereIn('place_id', $places)->fromTo($from, $to)->uzivatele()->adicts()->durationPP(),
+            ],
             'groups' => [
                 'name' => 'Skupinové intervence',
                 'neurotics' => Record::whereIn('place_id', $places)->fromTo($from, $to)->groupInterventions()->neurotics()->count(),
