@@ -1,6 +1,6 @@
-<div class="card my-2">
+<div class="card my-2 text-{{ $record->bootstrapColorClass }}">
     <div class="card-header">
-        <span class="badge text-bg-light">{{$record->id}}</span>
+        <span class="badge text-{{ $record->bootstrapColorClass }}">{{$record->id}}</span>
 
         <span class="mx-4">{{$record->place->name ?? ''}} - {{ Carbon\Carbon::parse($record->date)->format('j. n. Y')}}</span>
         <span class="mx-4">{{ $record->duration }}</span>
