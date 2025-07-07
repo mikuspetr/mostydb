@@ -20,6 +20,10 @@
                     <li class="nav-item">
                         <a class="nav-link {{Route::is('records.*') ? 'active' : ''}}" href="{{route('records.index')}}">Záznamy</a>
                     </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link {{Route::is('individual-plans.*') ? 'active' : ''}}" href="{{route('individual-plans.index')}}">Individulní plány</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link {{Route::is('summary.*') ? 'active' : ''}}" href="{{route('summary.index', ['year' => date('Y')])}}">Přehledy</a>
                     </li>

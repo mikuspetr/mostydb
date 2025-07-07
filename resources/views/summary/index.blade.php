@@ -44,7 +44,7 @@
             <tr>
                 <td><strong>Celkem</strong></td>
                 <td><strong>{{ $total['duration'] }}</strong></td>
-                <td><strong>{{ $total['plan'] }}</strong></td>
+                <td><strong>{{ $total['plan'] }} (699)</strong></td>
                 <td><strong>{{ round($total['duration']/$total['plan'], 2) * 100 }}%</strong></td>
             </tr>
              
@@ -53,7 +53,7 @@
 
     <div class="col">
         <h3>Přehled ukazatelů za rok {{ $year }}</h3>
-        @include('summary.__placeOverview', ['overview' => $allPlaces])
+        @include('summary.__placeOverview', ['overview' => $allPlaces, 'all' => true])
 
         <h3 class="mt-4">Přehled ukazatelů pro Vsetín</h3>
         @include('summary.__placeOverview', ['overview' => $vsetin])

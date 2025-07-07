@@ -70,8 +70,8 @@ class ClientController extends Controller
         $client  = Client::find($id);
         $records = \App\Models\Record::whereHas('clients', function($query) use($id){
             $query->where('client_id', $id);
-        })->get();
-        $IPs = \App\Models\IndividualPlan::where('client_id', $id)->get();
+        })->orderByDesc('date')->get();
+        $IPs = \App\Models\IndividualPlan::where('client_id', $id)->orderByDesc('date')->get();
         return View('clients.show', compact('client', 'records', 'IPs'));
     }
 

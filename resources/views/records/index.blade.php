@@ -7,7 +7,7 @@
 <x-crud.header>Záznamy</x-crud.header>
 
 <hr>
-<div class="col col-xxl-9 crud-filters">
+<div class="col col-xxl-11 crud-filters">
     <form method="GET" action="{{ route('records.index') }}">
         <div class="row g-2">
             <div class="col">
@@ -155,7 +155,7 @@
                     <button type="submit" class="btn btn-outline-primary btn-xs" title="smazat"><i class="bi bi-trash"></i></button>
                 </form>
             </td>
-            <td>{{$record->date}}</td>
+            <td>{{$record->datum}}</td>
             <td>{{$record->place->name ?? ''}}</td>
             <td>
                 @foreach($record->users as $user)
@@ -169,7 +169,7 @@
             </td>
             <td>{{$record->form->name ?? ''}}</td>
             <td>{{isset($record->kind->name) ? $record->kind->name.', ' : ''}}{{$record->type->name ?? ''}}</td>
-            <td>{{$record->duration}}</td>
+            <td>{{$record->duration}} / {{ $record->duration_pp }}</td>
             <td><div class="record-text">{!!$record->text !!}</div></td>
         </tr>
         @endforeach

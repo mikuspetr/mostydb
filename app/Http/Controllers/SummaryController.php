@@ -21,7 +21,7 @@ class SummaryController extends Controller
                 'to' => $to,
                 'records' => $records->count(),
                 'duration' => round($records->sum('duration')/60),
-                'plan' => 59,
+                'plan' => 75,
             ];
             $months[] = $row;
             $total['records'] = ($total['records'] ?? 0) + $row['records'];
@@ -33,7 +33,7 @@ class SummaryController extends Controller
 
         $from = \Carbon\Carbon::create($year, 1)->startOfYear()->format('Y-m-d');
         $to = \Carbon\Carbon::create($year, 12)->endOfYear()->format('Y-m-d');
-
+//dd($from, $to);
         $allPlaces = $this->getOverview($from, $to);
         $vsetin = $this->getOverview($from, $to, [RecordPlace::VSETIN]);
         $valmez = $this->getOverview($from, $to, [RecordPlace::VALMEZ]);

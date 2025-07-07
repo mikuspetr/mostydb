@@ -4,8 +4,11 @@
         <div class="col-sm-2">
             <span class="mx-4">{{ Carbon\Carbon::parse($ip->date)->format('j. n. Y') }}</span>
         </div>
-        <div class="col-sm-10">
+        <div class="col-sm-8">
             <h4>{!! $ip->title !!}</h4>
+        </div>
+        <div class="col-sm-2">
+            <a class="btn btn-outline-primary btn-sm float-end" href="{{route('individual-plans.edit', ['individual_plan' => $ip->id])}}" title="upravit"><i class="bi bi-pencil"></i> upravit IP</a>
         </div>
     </div>
     </div>

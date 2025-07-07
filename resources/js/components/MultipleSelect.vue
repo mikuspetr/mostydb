@@ -1,13 +1,23 @@
-<script setup>
-import { ref } from 'vue'
+<template>
+  <div>
+    <VueMultiselect
+      v-model="selected"
+      :options="options">
+    </VueMultiselect>
+  </div>
+</template>
 
-const counter = ref(0)
+<script>
+import VueMultiselect from 'vue-multiselect'
+export default {
+  components: { VueMultiselect },
+  data () {
+    return {
+      selected: null,
+      options: ['list', 'of', 'options']
+    }
+  }
+}
 </script>
 
-<template>
-    <div>
-        <select name="multipleSelect">
-            <option value="">Vyber</option>
-        </select>
-    </div>
-</template>
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
