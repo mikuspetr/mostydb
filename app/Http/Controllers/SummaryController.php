@@ -14,7 +14,7 @@ class SummaryController extends Controller
         for($month = 1; $month <= 12; $month++) {
             $from = \Carbon\Carbon::create($year, $month)->startOfMonth()->format('Y-m-d');
             $to = \Carbon\Carbon::create($year, $month)->endOfMonth()->format('Y-m-d');
-            $records = Record::where('date', '>', $from)->where('date', '<', $to)->where('intervention', 1)->get();
+            $records = Record::where('date', '>=', $from)->where('date', '<=', $to)->where('intervention', 1)->get();
             $row = [
                 'name' => __(\Carbon\Carbon::create($year, $month)->format('F')),
                 'from' => $from,
@@ -29,11 +29,10 @@ class SummaryController extends Controller
             $total['plan'] = ($total['plan'] ?? 0) + $row['plan'];
             $total['name'] = 'Celkem';
         }
-        //dd($months, $total);
 
         $from = \Carbon\Carbon::create($year, 1)->startOfYear()->format('Y-m-d');
         $to = \Carbon\Carbon::create($year, 12)->endOfYear()->format('Y-m-d');
-//dd($from, $to);
+
         $allPlaces = $this->getOverview($from, $to);
         $vsetin = $this->getOverview($from, $to, [RecordPlace::VSETIN]);
         $valmez = $this->getOverview($from, $to, [RecordPlace::VALMEZ]);
@@ -72,7 +71,7 @@ class SummaryController extends Controller
     public function clients(Request $request)
     {
         $clients = \App\Models\Client::with('municipality')->where('pair_id', '!=', 'ZAJ')->whereHas('records',function($query) use($request){
-            return $query->where('date', '>', $request->from)->where('date', '<', $request->to)->where('intervention', 1);
+            return $query->where('date', '>=', $request->from)->where('date', '<=', $request->to)->where('intervention', 1);
         })->orderByDesc('municipality_id')->get();
 
         $municipalities = $clients->groupBy('municipality_id')->mapWithKeys(function($clients, $munId){
@@ -93,7 +92,7 @@ class SummaryController extends Controller
 
         $noMunClients = \App\Models\Client::where('pair_id', '!=', 'ZAJ')->whereNull('municipality_id')
         ->whereHas('records',function($query) use($request){
-            return $query->where('date', '>', $request->from)->where('date', '<', $request->to)->where('intervention', 1);
+            return $query->where('date', '>=', $request->from)->where('date', '<=', $request->to)->where('intervention', 1);
         })->get();
 
         return view('summary.clients', compact('municipalities', 'orps', 'noMunClients', 'request'));

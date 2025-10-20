@@ -139,7 +139,7 @@ class Record extends Model
 
     public function scopeFromTo($query, $from, $to)
     {
-        return $query->where('date', '>', $from)->where('date', '<', $to);
+        return $query->where('date', '>=', $from)->where('date', '<=', $to);
     }
 
     public function scopeIndividualInterventions($query)
