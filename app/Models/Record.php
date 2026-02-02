@@ -144,7 +144,7 @@ class Record extends Model
 
     public function scopeIndividualInterventions($query)
     {
-        return $query->where('kind_id', 1);
+        return $query->whereIn('kind_id', [0,1])->where('intervention', 1); //hotfix - opravit chybu v datech, u intervence by mela byt hodnota kind_id >=1, ne 0
     }
     public function scopeGroupInterventions($query)
     {
