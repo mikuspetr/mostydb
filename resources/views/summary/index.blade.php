@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label for="year">Vyberte rok:</label>
                 <select name="year" id="year" class="form-control" onchange="this.form.submit()">
-                    @for ($i = date('Y'); $i >= 2014; $i--)
+                    @for ($i = date('Y'); $i >= $fromYear; $i--)
                         <option value="{{ $i }}" {{ $i == $year ? 'selected' : '' }}>{{ $i }}</option>
                     @endfor
                 </select>
@@ -40,14 +40,14 @@
                 <td>{{ round($month['duration']/$month['plan'], 2) * 100 }}%</td>
             </tr>
             @endforeach
-             
+
             <tr>
                 <td><strong>Celkem</strong></td>
                 <td><strong>{{ $total['duration'] }}</strong></td>
                 <td><strong>{{ $total['plan'] }} (699)</strong></td>
                 <td><strong>{{ round($total['duration']/$total['plan'], 2) * 100 }}%</strong></td>
             </tr>
-             
+
         </table>
     </div>
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\IndividualPlan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IndividualPlanController extends Controller
 {
@@ -26,9 +27,17 @@ class IndividualPlanController extends Controller
         if ($clientId) {
             $query->where('client_id', $clientId);
         }
+
         if ($dateFrom) {
+            if(Auth::user()->hasRole('auditor') && $dateFrom < '2025-01-01') {
+                $dateFrom = '2025-01-01'; // Auditors can only see records from 2025
+            }
             $query->whereDate('date', '>=', $dateFrom);
+
+        } elseif (Auth::user()->hasRole('auditor')) {
+            $query->where('date', '>=', '2025-01-01'); // Auditors can only see records from 2025
         }
+
         if ($dateTo) {
             $query->whereDate('date', '<=', $dateTo);
         }
@@ -52,7 +61,7 @@ class IndividualPlanController extends Controller
     public function create()
     {
         $clients = \App\Models\Client::all();
-        
+
         return view('individual-plans.create', compact('clients'));
     }
 
@@ -85,7 +94,7 @@ class IndividualPlanController extends Controller
     public function show(string $id)
     {
         $plan = IndividualPlan::with('client')->findOrFail($id);
-        
+
         return view('individual-plans.show', compact('plan'));
     }
 
@@ -96,7 +105,7 @@ class IndividualPlanController extends Controller
     {
         $plan = IndividualPlan::findOrFail($id);
         $clients = \App\Models\Client::all();
-        
+
         return view('individual-plans.edit', compact('plan', 'clients'));
     }
 
@@ -106,7 +115,7 @@ class IndividualPlanController extends Controller
     public function update(Request $request, string $id)
     {
         $plan = IndividualPlan::findOrFail($id);
-        
+
         $request->validate([
             'client_id' => 'required|exists:clients,id',
             'date' => 'nullable|date',

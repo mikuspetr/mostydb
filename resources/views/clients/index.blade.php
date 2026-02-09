@@ -33,9 +33,11 @@
                 <tr>
                     <td>
                         {{ $client->id }}
+                        @unlessrole('auditor')
                         <a class="btn btn-outline-primary btn-xs"
                             href="{{ route('clients.edit', ['client' => $client->id]) }}" title="upravit"><i
                                 class="bi bi-pencil-square"></i></a>
+                        @endunlessrole
                         <a class="btn btn-outline-primary btn-xs"
                             href="{{ route('clients.show', ['client' => $client->id]) }}" title="zobrazit"><i
                                 class="bi bi-eye"></i></a>

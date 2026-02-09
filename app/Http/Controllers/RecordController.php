@@ -6,9 +6,24 @@ use App\Models\Client;
 use App\Models\Record;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class RecordController extends Controller
 {
+    /*
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('role:auditor')->only(['index']);
+    }
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('role:author', only: ['index']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -61,7 +76,12 @@ class RecordController extends Controller
             $query->where('color_id', $colorId);
         }
         if ($dateFrom) {
+            if(Auth::user()->hasRole('auditor') && $dateFrom < '2025-01-01') {
+                $dateFrom = '2025-01-01'; // Auditors can only see records from 2025
+            }
             $query->where('date', '>=', $dateFrom);
+        } elseif (Auth::user()->hasRole('auditor')) {
+            $query->where('date', '>=', '2025-01-01'); // Auditors can only see records from 2025
         }
         if ($dateTo) {
             $query->where('date', '<=', $dateTo);

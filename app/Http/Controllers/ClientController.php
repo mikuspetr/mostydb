@@ -10,6 +10,7 @@ use App\Models\ClientDescription;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -20,11 +21,17 @@ class ClientController extends Controller
      */
     public function index(Request $request)
     {
+        $query = \App\Models\Client::query();
+        if(Auth::user()->hasRole('auditor')) {
+            $query->whereHas('records', function($q){
+                $q->where('date', '>=', '2025-01-01'); // Auditors can only see clients with records from 2025
+            });
+        }
         if(isset($request->active_complaint) && $request->active_complaint == 1)
         {
-            $clients = Client::withValidContract()->with('records')->get()->sortByDesc('lastRecordDate');;
+            $clients = $query->withValidContract()->with('records')->get()->sortByDesc('lastRecordDate');;
         } else {
-            $clients = Client::with('records')->get()->sortByDesc('lastRecordDate');
+            $clients = $query->with('records')->get()->sortByDesc('lastRecordDate');
         }
         return View('clients.index', compact('clients', 'request'));
     }
@@ -68,10 +75,17 @@ class ClientController extends Controller
     public function show($id)
     {
         $client  = Client::find($id);
-        $records = \App\Models\Record::whereHas('clients', function($query) use($id){
-            $query->where('client_id', $id);
+        $recordQuery = \App\Models\Record::query();
+        $IPsQuery = \App\Models\IndividualPlan::query();
+        if(Auth::user()->hasRole('auditor')) {
+            $recordQuery->where('date', '>=', '2025-01-01'); // Auditors can only see records from 2025
+            $IPsQuery->where('date', '>=', '2025-01-01'); // Auditors can only see IPs from 2025
+        }
+        $records = $recordQuery->whereHas('clients', function($q) use($id){
+            $q->where('client_id', $id);
         })->orderByDesc('date')->get();
-        $IPs = \App\Models\IndividualPlan::where('client_id', $id)->orderByDesc('date')->get();
+
+        $IPs = $IPsQuery->where('client_id', $id)->orderByDesc('date')->get();
         return View('clients.show', compact('client', 'records', 'IPs'));
     }
 

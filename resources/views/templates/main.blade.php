@@ -6,6 +6,9 @@
         @include('templates.menu')
         @hasSection('content')
             <section id="app" class="container-fluid">
+                @if(session('info'))
+                    <x-info-modal :message="session('info')" />
+                @endif
                 @yield('content')
             </section>
         @endif

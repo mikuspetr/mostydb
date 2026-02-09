@@ -11,7 +11,7 @@
                 <div class="col-sm-12">
                     <label for="year" class="form-label mt-0">Rok</label>
                     <select name="year" id="year" class="form-control">
-                        @for($i = date('Y'); $i >= 2014; $i--)
+                        @for($i = date('Y'); $i >= $fromYear; $i--)
                             <option value="{{$i}}" {{$i == substr($request->from, 0, 4) ? 'selected' : ''}}>{{$i}}</option>
                         @endfor
                     </select>

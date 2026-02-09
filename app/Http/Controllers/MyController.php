@@ -18,9 +18,12 @@ class MyController extends Controller
 {
     public function debug(Request $request)
     {
+
         if(!Auth::user()->hasRole('admin')) {
             return redirect()->route('home');
         }
+        $role = Role::find(2);
+        dd($role, $role->permissions, $role->permissions()->pluck('name'));
         $clients = \App\Models\Client::whereHas('records',function($query){
             return $query->where('date', '>', '2023-01-01')->where('date', '<', '2024-01-01');
         })->get();

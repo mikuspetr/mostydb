@@ -10,14 +10,16 @@ class InfoModal extends Component
 {
     public string $modalId;
     public string $message;
+    public string $status = 'info';
 
     /**
      * Create a new component instance.
      */
-    public function __construct(string $modalId = 'infoModal', string $message = '')
+    public function __construct(string $modalId = 'infoModal', string $message = '', string $status = 'info')
     {
         $this->modalId = $modalId;
         $this->message = $message;
+        $this->status = $status;
     }
 
     /**

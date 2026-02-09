@@ -15,7 +15,9 @@ class UserController extends Controller
     public function index()
     {
         $users = \App\Models\User::get();
-        return View('users.index', compact('users'));
+        $roles = \Spatie\Permission\Models\Role::all();
+        $permissions = \Spatie\Permission\Models\Permission::all();
+        return View('users.index', compact('users', 'roles', 'permissions'));
     }
 
     /**
@@ -47,7 +49,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = \App\Models\User::find($id);
+        $roles = \Spatie\Permission\Models\Role::all();
+        $permissions = \Spatie\Permission\Models\Permission::all();
+        return View('users.show', compact('user', 'roles', 'permissions'));
     }
 
     /**
@@ -70,7 +75,9 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = \App\Models\User::find($id);
+        $user->syncRoles($request->input('roles', []));
+        return redirect()->route('users.show', $id)->with('success', 'Oprávnění uživatele aktualizována.');
     }
 
     /**

@@ -14,13 +14,15 @@
                     <li class="nav-item">
                         <a class="nav-link {{Route::is('clients.*') ? 'active' : ''}}" href="{{route('clients.index')}}">Klienti</a>
                     </li>
+                    @if(Auth::user()->hasRole('admin'))
                     <li class="nav-item">
                         <a class="nav-link {{Route::is('users.*') ? 'active' : ''}}" href="{{route('users.index')}}">Pracovníci</a>
                     </li>
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link {{Route::is('records.*') ? 'active' : ''}}" href="{{route('records.index')}}">Záznamy</a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link {{Route::is('individual-plans.*') ? 'active' : ''}}" href="{{route('individual-plans.index')}}">Individulní plány</a>
                     </li>

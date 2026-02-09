@@ -4,6 +4,6 @@
     </li>
     <li class="nav-item">
         <a class="nav-link {{ Route::is('summary.clients') ? 'active' : '' }}"
-            href="{{ route('summary.clients', ['from' => '2023-01-01', 'to' => '2023-12-31']) }}">Přehled klientů</a>
+            href="{{ route('summary.clients', ['from' => '2026-01-01', 'to' => '2026-12-31']) }}">Přehled klientů</a>
     </li>
 </ul>

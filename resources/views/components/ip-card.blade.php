@@ -8,7 +8,9 @@
             <h4>{!! $ip->title !!}</h4>
         </div>
         <div class="col-sm-2">
+            @can('update')
             <a class="btn btn-outline-primary btn-sm float-end" href="{{route('individual-plans.edit', ['individual_plan' => $ip->id])}}" title="upravit"><i class="bi bi-pencil"></i> upravit IP</a>
+            @endcan
         </div>
     </div>
     </div>

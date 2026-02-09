@@ -31,6 +31,12 @@ class Header extends Component
      */
     public function render(): View|Closure|string
     {
+        if(auth()->user()->hasRole('auditor')) {
+            $this->route = route($this->routePrefix.'.index');
+        }
+        else{
+
+
         switch($this->routeAction)
         {
             case 'index':
@@ -47,6 +53,7 @@ class Header extends Component
             default:
                 $this->btnText = 'Přehled '.trans_choice('crud.'.$this->routePrefix,1);
                 $this->route = route($this->routePrefix.'.index');
+        }
         }
         return view('components.crud.header');
     }

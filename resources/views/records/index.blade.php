@@ -1,9 +1,6 @@
 @extends('templates.main')
 
 @section('content')
-@if(session('info'))
-    <x-info-modal :message="session('info')" />
-@endif
 <x-crud.header>Záznamy</x-crud.header>
 
 <hr>
@@ -65,7 +62,7 @@
                 @endforeach
                 </select>
             </div>
-            
+
             <div class="col">
                 <label for="color_id" class="form-label">Barva záznamu</label>
                 <select name="color_id" id="color_id" class="form-select">
@@ -147,6 +144,7 @@
         <tr class="text-{{ $record->bootstrapColorClass }}">
             <td>
                 {{$record->id}}<br>
+                @unlessrole('auditor')
                 <a class="btn btn-outline-primary btn-xs" href="{{route('records.edit', ['record' => $record->id])}}" title="upravit"><i class="bi bi-pencil-square"></i></a>
                 <a class="btn btn-outline-primary btn-xs" href="{{route('records.show', ['record' => $record->id])}}" title="zobrazit"><i class="bi bi-eye"></i></a>
                 <form method="POST" action="{{route('records.destroy', ['record' => $record->id])}}" onsubmit="return confirm('Opravdu chcete záznam smazat?');" style="display:inline;">
@@ -154,6 +152,7 @@
                     {{ csrf_field() }}
                     <button type="submit" class="btn btn-outline-primary btn-xs" title="smazat"><i class="bi bi-trash"></i></button>
                 </form>
+                @endunlessrole
             </td>
             <td>{{$record->datum}}</td>
             <td>{{$record->place->name ?? ''}}</td>

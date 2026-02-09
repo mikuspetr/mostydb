@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('clients', \App\Http\Controllers\ClientController::class);
     Route::resource('users', \App\Http\Controllers\UserController::class);
     Route::resource('records', \App\Http\Controllers\RecordController::class);
+    Route::resource('roles', \App\Http\Controllers\RoleController::class);
     Route::resource('individual-plans', \App\Http\Controllers\IndividualPlanController::class);
 
     Route::get('/summary', [\App\Http\Controllers\SummaryController::class, 'index'])->name('summary.index');

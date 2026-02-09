@@ -1,9 +1,6 @@
 @extends('templates.main')
 
 @section('content')
-@if(session('info'))
-    <x-info-modal :message="session('info')" />
-@endif
 <x-crud.header>Individuální plány</x-crud.header>
 
 <hr>
@@ -67,14 +64,17 @@
         <tr>
             <td>
                 {{$plan->id}}<br>
-                <a class="btn btn-outline-primary btn-xs" href="{{route('individual-plans.edit', ['individual_plan' => $plan->id])}}" title="upravit"><i class="bi bi-pencil-square"></i></a>
                 <a class="btn btn-outline-primary btn-xs" href="{{route('individual-plans.show', ['individual_plan' => $plan->id])}}" title="zobrazit"><i class="bi bi-eye"></i></a>
+
+                @can('update')
+                <a class="btn btn-outline-primary btn-xs" href="{{route('individual-plans.edit', ['individual_plan' => $plan->id])}}" title="upravit"><i class="bi bi-pencil-square"></i></a>
+
                 <form method="POST" action="{{route('individual-plans.destroy', ['individual_plan' => $plan->id])}}" onsubmit="return confirm('Opravdu chcete záznam smazat?');" style="display:inline;">
                     {{ method_field('DELETE') }}
                     {{ csrf_field() }}
                     <button type="submit" class="btn btn-outline-primary btn-xs" title="smazat"><i class="bi bi-trash"></i></button>
                 </form>
-                 
+                @endcan
             </td>
             <td>{{$plan->datum}}</td>
             <td>

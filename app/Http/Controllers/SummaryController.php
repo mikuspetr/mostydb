@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Record;
 use App\Models\RecordPlace;
+use Illuminate\Support\Facades\Auth;
 
 class SummaryController extends Controller
 {
@@ -65,7 +66,9 @@ class SummaryController extends Controller
             ],
         ];
 
-        return view('summary.index', compact('year', 'months', 'allPlaces', 'vsetin', 'valmez', 'meetings', 'total'));
+        $fromYear = Auth::user()->hasRole('auditor') ? '2025' : '2014';
+
+        return view('summary.index', compact('year', 'months', 'allPlaces', 'vsetin', 'valmez', 'meetings', 'total', 'fromYear'));
     }
 
     public function clients(Request $request)
@@ -95,7 +98,9 @@ class SummaryController extends Controller
             return $query->where('date', '>=', $request->from)->where('date', '<=', $request->to)->where('intervention', 1);
         })->get();
 
-        return view('summary.clients', compact('municipalities', 'orps', 'noMunClients', 'request'));
+        $fromYear = Auth::user()->hasRole('auditor') ? '2025' : '2014';
+
+        return view('summary.clients', compact('municipalities', 'orps', 'noMunClients', 'request', 'fromYear'));
     }
 
     private function getOverview($from, $to, $places = RecordPlace::ALL_PLACES)
