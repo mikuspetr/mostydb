@@ -148,7 +148,7 @@ class RecordController extends Controller
     public function edit(string $id)
     {
         $record = \App\Models\Record::find($id);
-        $clients = \App\Models\Client::get();
+        $clients = \App\Http\Resources\ClientResource::collection(\App\Models\Client::get());
         $users = \App\Models\User::withoutAdminRole()->get();
         $places = \App\Models\RecordPlace::get();
         $recordForms = \App\Models\RecordForm::get();
@@ -168,14 +168,10 @@ class RecordController extends Controller
         //dd($request->all(), $id);
         $record = Record::find($id);
         $this->requestToRecord($request, $record);
-        if(!empty(array_diff($record->clients->pluck('id')->toArray(), $request->clients))) {
-            $this->saveRecordClients($request, $record);
-        }
-        if(!empty(array_diff($record->users->pluck('id')->toArray(), $request->users))) {
-            $this->saveRecordUsers($request, $record);
-        }
+        $this->saveRecordClients($request, $record);
+        $this->saveRecordUsers($request, $record);
         return redirect('records');
-        return View('records.show', compact('record'));
+        //return View('records.show', compact('record'));
     }
 
     /**

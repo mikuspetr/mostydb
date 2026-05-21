@@ -9,11 +9,10 @@
         "@vitejs/plugin-vue": "^5.2.4",
         "axios": "^1.6.7",
         "laravel-vite-plugin": "^1.0.1",
-        "vite": "^5.0.12"
+        "vite": "^8.0.14"
     },
     "dependencies": {
-        "@ckeditor/ckeditor5-vue": "^6.0.0",
-        "ckeditor5": "^42.0.2",
+        "@tinymce/tinymce-vue": "^6.3.0",
         "vue": "^3.5.17",
         "vue-multiselect": "^3.2.0"
     }
