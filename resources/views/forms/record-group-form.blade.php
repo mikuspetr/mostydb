@@ -18,15 +18,18 @@
             @endforeach
             <br>
 
-            <label for="clients" class="form-label">Klient</label>
+            <label for="clients" class="form-label">Klienti</label>
+
             <select name="clients[]" id="clients" class="form-select" multiple>
                 @foreach ($clients as $client)
                     <option value="{{ $client->id }}" {{ isset($record) && $record->hasClientId($client->id) ? 'selected' : '' }}>{{ $client->clientCode }}</option>
                 @endforeach
             </select>
 
-            
-            
+            <button type="button" class="btn btn-outline-secondary mt-3 me-2" data-bs-toggle="modal" data-bs-target="#clientsModal">
+                Vybrat klienty
+            </button>
+            <br>
             <label for="users" class="form-label">Pracovníci</label>
             <select name="users[]" id="users" class="form-select" multiple>
                 @foreach ($users as $user)
@@ -105,5 +108,69 @@
     </div>
     <input type="hidden" name="kind_id" value="2">
     <input type="hidden" name="intervention" value="1">
+
     <button type="submit" class="btn btn-primary mt-3">{{isset($record) ? 'Upravit skupinovou intervenci' : 'Přidat skupinovou intervenci' }}</button>
+
+    <div class="modal fade" id="clientsModal" tabindex="-1" aria-labelledby="clientsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="clientsModalLabel">Klienti</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="max-height: 60vh; overflow-y: auto;">
+                    @foreach($clients as $client)
+                        <input name="clients[]" type="checkbox" class="client-modal-checkbox" value="{{ $client->id }}" id="client-{{ $client->id }}"
+                            {{ isset($record) && $record->hasClientId($client->id) ? 'checked' : '' }}>
+                        <label for="client-{{ $client->id }}">{{ $client->clientCode }}</label><br>
+
+                    @endforeach
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="applyClientsSelection" class="btn btn-primary">Uložit výběr</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const clientsSelect = document.getElementById('clients');
+        const clientsModal = document.getElementById('clientsModal');
+        const applyClientsSelectionButton = document.getElementById('applyClientsSelection');
+
+        if (!clientsSelect || !clientsModal || !applyClientsSelectionButton) {
+            return;
+        }
+
+        clientsModal.addEventListener('show.bs.modal', function () {
+            const selectedValues = new Set(
+                Array.from(clientsSelect.selectedOptions).map(option => option.value)
+            );
+
+            clientsModal.querySelectorAll('.client-modal-checkbox').forEach(checkbox => {
+                checkbox.checked = selectedValues.has(checkbox.value);
+            });
+        });
+
+        applyClientsSelectionButton.addEventListener('click', function () {
+            const checkedValues = new Set(
+                Array.from(clientsModal.querySelectorAll('.client-modal-checkbox:checked'))
+                    .map(checkbox => checkbox.value)
+            );
+
+            Array.from(clientsSelect.options).forEach(option => {
+                option.selected = checkedValues.has(option.value);
+            });
+
+            clientsSelect.dispatchEvent(new Event('change', { bubbles: true }));
+
+            const modalInstance = bootstrap.Modal.getInstance(clientsModal);
+            if (modalInstance) {
+                modalInstance.hide();
+            }
+        });
+    });
+</script>

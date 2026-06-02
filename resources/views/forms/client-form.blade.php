@@ -114,5 +114,6 @@
             </textarea>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary">Přidat klienta</button>
+    <br>
+    <button type="submit" class="btn btn-primary">{{isset($client) ? 'Upravit klienta' : 'Přidat klienta' }}</button>
 </form>
