@@ -33,6 +33,16 @@ class Client extends Model
         return 'SNP-' . $this->code . mb_substr($this->sex->name, 0,1) . '-' . $this->pair_id . '-' . mb_substr($this->category->name, 0,1);
     }
 
+    public static function getIdByClientCode(string $clientCode): ?int
+    {
+            $parts = explode('-', $clientCode);
+            if (count($parts) !== 4 || $parts[0] !== 'SNP') {
+                return null; // Invalid format
+            }
+            $client = self::where('code', substr($parts[1], 0, -1))->where('pair_id', $parts[2])->first();
+        return $client ? $client->id : null;
+    }
+
     public function description()
     {
         return $this->hasOne(\App\Models\ClientDescription::class)->withDefault();

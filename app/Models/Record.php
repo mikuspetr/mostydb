@@ -71,6 +71,13 @@ class Record extends Model
         return $this->belongsToMany(\App\Models\Client::class, 'record_clients');
     }
 
+    public function getClientsCodesAttribute(): \Illuminate\Support\Collection
+    {
+        return $this->clients->mapWithKeys(function($client) {
+            return [$client->id => $client->clientCode];
+        });
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(\App\Models\User::class, 'record_users');

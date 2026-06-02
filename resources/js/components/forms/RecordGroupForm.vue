@@ -1,8 +1,4 @@
 <template>
-    <form method="POST" :action="record ? updateRoute : storeRoute">
-        <input type="hidden" name="_token" :value="csrfToken">
-        <input v-if="record" type="hidden" name="_method" value="PUT">
-
         <div class="row">
             <div class="col-sm-3">
                 <label for="date" class="form-label mt-0">Datum</label>
@@ -33,23 +29,37 @@
                     v-model="form.clients"
                     :options="clientCodes"
                     :multiple="true"
-                />
-                <input
-                    v-for="client in form.clients"
-                    :key="client"
-                    type="hidden"
-                    name="clients[]"
-                    :value="client"
-                >
+                    :close-on-select="false"
+                    :clear-on-select="false"
+                    :preserve-search="true"
+                    placeholder="Vyberte klienty"
+                    label="clientCode"
+                    track-by="id"
+                    />
+
 
                 <label for="users" class="form-label">Pracovníci</label>
-                <select name="users[]" id="users" class="form-select" multiple v-model="form.users">
-                    <option v-for="user in users" :key="user.id" :value="user.id">
-                        {{ user.login }}
-                    </option>
-                </select>
+                <multiselect
+                    v-model="form.users"
+                    :options="userNames"
+                    :multiple="true"
+                    :close-on-select="false"
+                    :clear-on-select="false"
+                    :preserve-search="true"
+                    placeholder="Vyberte pracovníky"
+                    label="login"
+                    track-by="id"
+                    />
+                <input
+                    v-for="userId in selectedUserIds"
+                    :key="`user-hidden-${userId}`"
+                    type="hidden"
+                    name="users[]"
+                    :value="userId"
+                >
                 <br>
                 <hr>
+
                 <div class="row">
                     <div class="col">
                         <label for="duration" class="form-label">Čas intervence</label>
@@ -118,26 +128,19 @@
                 </label>
                 <br>
             </div>
-
             <div class="col-sm-8">
                 <label for="text">Text intervence</label>
-                <textarea name="text" id="text" class="ckeditor" v-model="form.text"></textarea>
-            </div>
 
-            <div class="col-sm-4"></div>
+                <TextArea :id="'int-text'" :modelValue="form.text" name="text" class="form-control" rows="10" v-model="form.text"></TextArea>
+                <input type="hidden" name="text" :value="form.text">
+
+            </div>
         </div>
 
-        <input type="hidden" name="kind_id" value="2">
-        <input type="hidden" name="intervention" value="1">
-        <button type="submit" class="btn btn-primary mt-3">
-            {{ record ? 'Upravit skupinovou intervenci' : 'Přidat skupinovou intervenci' }}
-        </button>
-    </form>
 </template>
 
 <script setup>
-import { reactive, computed } from 'vue'
-import VueMultiselect from 'vue-multiselect'
+import { reactive, computed, ref } from 'vue'
 
 const props = defineProps({
     record: {
@@ -172,27 +175,39 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
-    storeRoute: {
-        type: String,
-        required: true,
-    },
-    updateRoute: {
-        type: String,
-        default: '',
-    },
-    csrfToken: {
-        type: String,
-        required: true,
+    recordClients: {
+        type: Array,
+        default: () => [],
     },
 })
-
-const clientCodes = computed(() => props.clients.map(c => c.clientCode))
+const clientCodes = computed(() =>
+    props.clients.map(c => ({
+        id: c.id,
+        clientCode: c.clientCode ?? c.client_code,
+    }))
+)
+const userNames = computed(() =>
+    props.users.map(u => ({
+        id: u.id,
+        login: u.login,
+    }))
+)
+const selectedClientIds = computed(() =>
+    (form.clients ?? [])
+        .map(client => (typeof client === 'object' ? client.id : client))
+        .filter(clientId => clientId !== null && clientId !== undefined && clientId !== '')
+)
+const selectedUserIds = computed(() =>
+    (form.users ?? [])
+        .map(user => (typeof user === 'object' ? user.id : user))
+        .filter(userId => userId !== null && userId !== undefined && userId !== '')
+)
 
 const form = reactive({
     date: props.record?.date ?? new Date().toISOString().slice(0, 10),
     place_id: props.record?.place_id ?? (props.places[0]?.id ?? null),
-    clients: props.record?.clients?.map(c => c.client_code) ?? [],
-    users: props.record?.users?.map(u => u.id) ?? [],
+    clients: props.recordClients ?? [],
+    users: props.record?.users?.map(u => u.login) ?? [],
     duration: props.record?.duration ?? '',
     duration_pp: props.record?.duration_pp ?? '',
     form_id: props.record?.form_id ?? (props.recordForms[0]?.id ?? null),
@@ -200,6 +215,12 @@ const form = reactive({
     color_id: props.record?.color_id ?? '',
     text: props.record?.text ?? '',
 });
+
+const isSubmitting = ref(false)
+
+const handleSubmit = () => {
+    isSubmitting.value = true
+}
 
 const mounted = () => {
     console.log('Mounted RecordGroupForm, clients:', props.clients);

@@ -1,3 +1,12 @@
+{{--
+
+--}}
+
+<form method="POST" action="{{ isset($record) ? route('records.update', [$record->id]) : route('records.store') }}">
+    @csrf
+    @if(isset($record))
+    @method('PUT')
+    @endif
 <record-group-form
     :record="{{ isset($record) ? $record : 'null' }}"
     :places="{{ json_encode($places) }}"
@@ -7,15 +16,9 @@
     :record-forms="{{ json_encode($recordForms) }}"
     :record-types="{{ json_encode($recordTypes) }}"
     :record-colors="{{ json_encode($recordColors) }}"
+    :record-clients="{{ json_encode($record->clientsCodes ?? []) }}"
 ></record-group-form>
-
 {{--
-<form method="POST" action="{{ isset($record) ? route('records.update', [$record->id]) : route('records.store') }}">
-    @csrf
-    @if(isset($record))
-    @method('PUT')
-    @endif
-
     <div class="row">
         <div class="col-sm-3">
             <label for="date" class="form-label mt-0">Datum</label>
@@ -32,14 +35,10 @@
             <br>
 
             <label for="clients" class="form-label">Klient</label>
-
-            <multiselect
-                v-model="value"
-                :options="{{ json_encode($clients->map(fn($client) => $client->clientCode)->values()) }}"
-                :multiple="true"
-                >
-
-            </multiselect>
+                <MSelect
+                    :options="{{ json_encode($clients->map(fn($client) => $client->clientCode)->values()) }}"
+                    :multiple="true"
+                ></MSelect>
 
             <label for="users" class="form-label">Pracovníci</label>
             <select name="users[]" id="users" class="form-select" multiple>
@@ -117,8 +116,8 @@
 
         </div>
     </div>
+    --}}
     <input type="hidden" name="kind_id" value="2">
     <input type="hidden" name="intervention" value="1">
     <button type="submit" class="btn btn-primary mt-3">{{isset($record) ? 'Upravit skupinovou intervenci' : 'Přidat skupinovou intervenci' }}</button>
 </form>
---}}

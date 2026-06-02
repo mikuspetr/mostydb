@@ -18,10 +18,15 @@ class MyController extends Controller
 {
     public function debug(Request $request)
     {
-
         if(!Auth::user()->hasRole('admin')) {
             return redirect()->route('home');
         }
+        $record = \App\Models\Record::find(5723);
+        dd($record);
+        $clients = \App\Models\Client::get();
+        //dd($clients);
+        return view('debug', ['clients' => $clients]);
+
         $role = Role::find(2);
         dd($role, $role->permissions, $role->permissions()->pluck('name'));
         $clients = \App\Models\Client::whereHas('records',function($query){
@@ -78,9 +83,7 @@ class MyController extends Controller
         $zaznamyChunk = DB::connection('mostyold')->table('zaznamy')->take(200)->get()->chunk(50)->toArray();
 
         dd($zaznamyChunk[1][50]->id);
-        $clients = \App\Models\Client::get();
-        //dd($clients);
-        return view('debug', ['clients' => $clients]);
+
     }
 
     public function getMunicipalities($orpId)

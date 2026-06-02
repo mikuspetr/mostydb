@@ -6,11 +6,15 @@
         <form method="POST" action="{{ route('individual-plans.update', $plan->id) }}">
             @csrf
             @method('PUT')
-            
+            <ip-form
+                :plan="{{ $plan }}"
+                :clients="{{ json_encode($clients) }}"
+            ></ip-form>
+        {{--
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="date" class="form-label">Datum</label>
-                    <input type="date" name="date" id="date" class="form-control @error('date') is-invalid @enderror" 
+                    <input type="date" name="date" id="date" class="form-control @error('date') is-invalid @enderror"
                            value="{{ old('date', $plan->date) }}">
                     @error('date')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -32,29 +36,30 @@
                     @enderror
                 </div>
             </div>
-            
+
             <div class="row mb-3">
                 <div class="col-md-12">
                     <label for="title" class="form-label">Název plánu</label>
-                    <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror" 
+                    <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror"
                            value="{{ old('title', $plan->title) }}" maxlength="255">
                     @error('title')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
-            
+
             <div class="row mb-3">
                 <div class="col-md-12">
                     <label for="text" class="form-label">Obsah plánu</label>
-                    <textarea name="text" id="text" class="form-control ckeditor @error('text') is-invalid @enderror" 
+                    <textarea name="text" id="text" class="form-control ckeditor @error('text') is-invalid @enderror"
                               rows="10">{{ old('text', $plan->text) }}</textarea>
                     @error('text')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
-            
+        --}}
+
             <div class="row">
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-primary">
