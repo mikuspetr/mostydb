@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\StorefrontController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,17 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+Route::get('/', [StorefrontController::class, 'index'])->name('storefront');
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 Route::get("/debug", [\App\Http\Controllers\MyController::class, 'debug'])->name('debug');
-
-
 Route::get('/dashboard', function () {
     return view('home');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-
-    Route::get('/', function () {
+    Route::get('/app', function () {
         return view('home');
     })->name('home');
 
