@@ -259,6 +259,7 @@ class RecordController extends Controller
     private function getKontaktDurations(): array
     {
         return [
+            0 => '0',
             1 => '1 min',
             2 => '2 min',
             2 => '2 min',
