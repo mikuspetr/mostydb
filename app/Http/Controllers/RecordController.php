@@ -244,6 +244,7 @@ class RecordController extends Controller
     private function getIndividualDurations(): array
     {
         return [
+            0 => '0',
             30 => '30 min',
             45 => '45 min',
             60 => '1 h',
