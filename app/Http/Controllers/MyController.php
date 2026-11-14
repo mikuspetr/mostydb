@@ -18,7 +18,9 @@ class MyController extends Controller
 {
     public function debug(Request $request)
     {
-
+        //(1);
+        $records = \App\Models\Record::where('date', '>', '2026-01-01')->contacts()->get();
+        dd($records);
         if(!Auth::user()->hasRole('admin')) {
             return redirect()->route('home');
         }

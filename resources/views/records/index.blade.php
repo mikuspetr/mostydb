@@ -62,6 +62,17 @@
                 @endforeach
                 </select>
             </div>
+            <div class="col">
+                <label for="form_id" class="form-label">Forma</label>
+                <select name="form_id" id="form_id" class="form-select">
+                    <option value="">-- Všechny --</option>
+                    @foreach($forms as $form)
+                        <option value="{{ $form->id }}" {{ (old('form_id', $formId ?? '') == $form->id) ? 'selected' : '' }}>
+                            {{ $form->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
             <div class="col">
                 <label for="color_id" class="form-label">Barva záznamu</label>

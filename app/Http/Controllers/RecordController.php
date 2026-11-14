@@ -35,6 +35,7 @@ class RecordController extends Controller
         $placeId = $request->input('place_id');
         $typeId = $request->input('type_id');
         $kindId = $request->input('kind_id');
+        $formId = $request->input('form_id');
         $colorId = $request->input('color_id');
         $dateFrom = $request->input('date_from');
         $dateTo = $request->input('date_to');
@@ -49,6 +50,7 @@ class RecordController extends Controller
         $types = \App\Models\RecordType::get();
         $kinds = \App\Models\RecordKind::get();
         $recordColors = \App\Models\RecordColor::get();
+        $forms = \App\Models\RecordForm::get();
 
         $query = \App\Models\Record::query();
 
@@ -71,6 +73,9 @@ class RecordController extends Controller
         }
         if ($kindId) {
             $query->where('kind_id', $kindId);
+        }
+        if ($formId) {
+            $query->where('form_id', $formId);
         }
         if( $colorId) {
             $query->where('color_id', $colorId);
@@ -96,8 +101,8 @@ class RecordController extends Controller
         $records = $query->orderBy($sortBy, $sortDir)->paginate(50)->appends($request->all());
 
         return view('records.index', compact(
-            'records', 'clientId', 'userId', 'placeId', 'typeId', 'kindId', 'colorId', 'dateFrom', 'dateTo', 'sortBy', 'sortDir',
-            'clients', 'users', 'places', 'types', 'kinds', 'recordColors'
+            'records', 'clientId', 'userId', 'placeId', 'typeId', 'kindId', 'colorId', 'formId', 'dateFrom', 'dateTo', 'sortBy', 'sortDir',
+            'clients', 'users', 'places', 'types', 'kinds', 'forms', 'recordColors'
         ));
     }
 
