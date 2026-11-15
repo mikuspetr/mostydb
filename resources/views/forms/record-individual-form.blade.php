@@ -25,10 +25,11 @@
                     </option>
                 @endforeach
             </select>
+            
             <label for="users" class="form-label">Pracovník</label>
             <select name="users[]" id="users" class="form-select" required>
                 @foreach ($users as $user)
-                    <option value="{{ $user->id }}" {{ isset($record) && $record->hasUserId($user->id) ? 'selected' : '' }}>
+                    <option value="{{ $user->id }}" {{ isset($record) && $record->hasUserId($user->id) ? 'selected' : (Route::currentRouteName() == 'records.create' && Auth::id() == $user->id ? 'selected' : '') }}>
                         {{ $user->login }}
                     </option>
                 @endforeach
